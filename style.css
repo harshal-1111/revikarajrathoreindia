@@ -7,10 +7,13 @@
 :root {
   --maroon: #56141d;
   --maroon-light: #64202a;
-  --cream: #f0dcc4;
+  --maroon-dark: #3a0b12;
+  --cream: #f3e2c9;
   --gold: #d9b98c;
+  --gold-deep: #b8875a;
   --gold-line: rgba(217, 170, 125, 0.55);
-  --gold-soft: rgba(217, 185, 140, 0.25);
+  --gold-soft: rgba(217, 185, 140, 0.22);
+  --gold-gradient: linear-gradient(90deg, #b8875a 0%, #f3dfc0 25%, #c99a68 50%, #f3dfc0 75%, #b8875a 100%);
 }
 
 body {
@@ -23,36 +26,112 @@ body {
   overflow-x: hidden;
 }
 
-/* Header */
+/* Shimmering gold text */
+.brand,
+.title,
+.monogram,
+.footer-monogram {
+  background: var(--gold-gradient);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* ================= Header ================= */
 .header {
   position: relative;
-  z-index: 2;
-  padding: 28px 16px;
+  z-index: 3;
+  padding: 26px 16px 22px;
   text-align: center;
-  border-bottom: 1px solid var(--gold-soft);
+  background: linear-gradient(to bottom, var(--maroon-dark), #48101a);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Gold line under the header */
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+  opacity: 0.6;
+}
+
+.monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  padding-left: 0.08em;
+  /* keep border visible while text uses gradient */
+  box-shadow: 0 0 0 4px var(--maroon-dark), 0 0 0 5px var(--gold-soft);
 }
 
 .brand {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Cinzel", serif;
   font-weight: 500;
-  font-size: clamp(1rem, 3.5vw, 2rem);
-  letter-spacing: 0.25em;
-  padding-left: 0.25em; /* balances trailing letter-spacing */
+  font-size: clamp(1rem, 3vw, 1.9rem);
+  letter-spacing: 0.3em;
+  padding-left: 0.3em; /* balances trailing letter-spacing */
   text-transform: uppercase;
-  color: var(--cream);
 }
 
-/* Coming soon section */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  width: clamp(40px, 8vw, 90px);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+
+.ornament::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.ornament .dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.ornament .diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+/* ================= Coming soon section ================= */
 .hero {
   position: relative;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 560px;
-  padding: 60px 16px;
+  min-height: 600px;
+  padding: 80px 24px;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, #5a1720 0%, var(--maroon) 60%, #4c111a 100%);
+  background: radial-gradient(ellipse at center, #611b25 0%, var(--maroon) 55%, #47101a 100%);
 }
 
 /* Decorative circles */
@@ -107,20 +186,83 @@ body {
   transform: translate(50%, 50%);
 }
 
+/* Inset frame */
+.frame {
+  position: absolute;
+  inset: 28px;
+  border: 1px solid var(--gold-soft);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-color: var(--gold);
+  border-style: solid;
+  border-width: 0;
+}
+
+.corner.tl { top: -5px; left: -5px; border-top-width: 2px; border-left-width: 2px; }
+.corner.tr { top: -5px; right: -5px; border-top-width: 2px; border-right-width: 2px; }
+.corner.bl { bottom: -5px; left: -5px; border-bottom-width: 2px; border-left-width: 2px; }
+.corner.br { bottom: -5px; right: -5px; border-bottom-width: 2px; border-right-width: 2px; }
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  z-index: 1;
+  color: var(--gold);
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.s1 { top: 18%; left: 22%; font-size: 12px; animation-delay: 0s; }
+.s2 { top: 28%; right: 18%; font-size: 9px; animation-delay: 1.2s; }
+.s3 { bottom: 24%; left: 14%; font-size: 10px; animation-delay: 2.1s; }
+.s4 { bottom: 16%; right: 30%; font-size: 13px; animation-delay: 0.6s; }
+.s5 { top: 12%; right: 38%; font-size: 7px; animation-delay: 2.8s; }
+.s6 { bottom: 38%; left: 30%; font-size: 7px; animation-delay: 1.7s; }
+
 /* Content */
 .content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
-  animation: fadeIn 1.2s ease-out;
 }
 
-/* Loader */
-.loader {
+.content > * {
+  opacity: 0;
+  animation: fadeUp 1s ease-out forwards;
+}
+
+.content > :nth-child(1) { animation-delay: 0.1s; }
+.content > :nth-child(2) { animation-delay: 0.35s; }
+.content > :nth-child(3) { animation-delay: 0.6s; }
+.content > :nth-child(4) { animation-delay: 0.85s; }
+.content > :nth-child(5) { animation-delay: 1.1s; }
+
+/* Loader with soft glow */
+.loader-wrap {
   position: relative;
   width: 110px;
   height: 110px;
   margin: 0 auto 48px;
+}
+
+.loader-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 150, 110, 0.22), transparent 70%);
+}
+
+.loader {
+  position: relative;
+  width: 100%;
+  height: 100%;
   animation: spin 1.4s steps(12) infinite;
 }
 
@@ -155,12 +297,12 @@ body {
 .title {
   font-family: "Cormorant Garamond", serif;
   font-weight: 500;
-  font-size: clamp(2.2rem, 7vw, 5rem);
+  font-size: clamp(2.2rem, 7vw, 5.2rem);
   letter-spacing: 0.3em;
   padding-left: 0.3em;
-  line-height: 1.1;
+  line-height: 1.15;
   text-transform: uppercase;
-  color: var(--cream);
+  text-shadow: 0 4px 30px rgba(243, 223, 192, 0.12);
 }
 
 .divider {
@@ -189,63 +331,159 @@ body {
   font-family: "Cormorant Garamond", serif;
   font-weight: 500;
   font-size: clamp(0.8rem, 1.6vw, 1.25rem);
-  letter-spacing: 0.3em;
-  padding-left: 0.3em;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
 .website {
-  margin-top: 72px;
+  display: inline-block;
+  margin-top: 64px;
+  padding: 14px 30px;
+  border: 1px solid var(--gold-line);
+  border-radius: 40px;
   font-weight: 400;
-  font-size: clamp(0.85rem, 1.8vw, 1.4rem);
+  font-size: clamp(0.8rem, 1.5vw, 1.15rem);
   letter-spacing: 0.18em;
-  padding-left: 0.18em;
   color: var(--cream);
+  text-decoration: none;
+  background: rgba(58, 11, 18, 0.35);
+  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Footer */
+.website:hover {
+  background: var(--gold);
+  color: var(--maroon-dark);
+  box-shadow: 0 8px 30px rgba(217, 185, 140, 0.25);
+}
+
+/* ================= Footer ================= */
 .footer {
   position: relative;
-  z-index: 2;
-  padding: 24px 16px;
+  z-index: 3;
+  padding: 40px 16px 30px;
   text-align: center;
-  border-top: 1px solid var(--gold-soft);
+  background: linear-gradient(to bottom, #48101a, var(--maroon-dark));
 }
 
-.footer p {
-  font-size: 0.85rem;
-  font-weight: 300;
+/* Gold line with ornament on top of the footer */
+.footer-ornament {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+.footer-ornament::before,
+.footer-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold) 70%);
+  opacity: 0.6;
+}
+
+.footer-ornament::after {
+  background: linear-gradient(to left, transparent, var(--gold) 70%);
+}
+
+.footer-ornament span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  background: #48101a;
+}
+
+.footer-monogram {
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  padding-left: 0.15em;
+}
+
+.footer-brand {
+  margin-top: 6px;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1.05rem;
   letter-spacing: 0.08em;
   color: var(--gold);
   opacity: 0.85;
 }
 
-/* Animations */
+.copyright {
+  max-width: 600px;
+  margin: 18px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--gold-soft);
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+/* ================= Animations ================= */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tablet */
-@media (max-width: 900px) {
-  .hero { min-height: 520px; }
-  .loader { margin-bottom: 36px; }
-  .website { margin-top: 56px; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.15); }
 }
 
-/* Mobile */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .content > * { opacity: 1; }
+}
+
+/* ================= Tablet ================= */
+@media (max-width: 900px) {
+  .hero { min-height: 540px; }
+  .loader-wrap { margin-bottom: 36px; }
+  .website { margin-top: 52px; }
+}
+
+/* ================= Mobile ================= */
 @media (max-width: 600px) {
-  .header { padding: 22px 16px; }
-  .brand { letter-spacing: 0.15em; padding-left: 0.15em; }
+  .header { padding: 20px 16px 18px; }
+  .monogram { width: 38px; height: 38px; font-size: 0.8rem; margin-bottom: 10px; }
+  .brand { letter-spacing: 0.16em; padding-left: 0.16em; }
 
-  .hero { min-height: 480px; padding: 48px 16px; }
+  .hero { min-height: 520px; padding: 64px 20px; }
+  .frame { inset: 12px; }
+  .corner { width: 22px; height: 22px; }
 
-  .loader {
+  .loader-wrap {
     width: 80px;
     height: 80px;
     margin-bottom: 32px;
@@ -260,7 +498,10 @@ body {
   .title { font-size: clamp(1.5rem, 8.5vw, 2.2rem); letter-spacing: 0.18em; padding-left: 0.18em; }
   .divider { margin: 22px auto 24px; gap: 12px; }
   .tagline { letter-spacing: 0.18em; padding-left: 0.18em; line-height: 1.8; }
-  .website { margin-top: 48px; letter-spacing: 0.1em; padding-left: 0.1em; }
+  .website { margin-top: 40px; padding: 12px 20px; letter-spacing: 0.08em; }
 
-  .footer p { font-size: 0.72rem; letter-spacing: 0.04em; }
+  .footer { padding: 36px 16px 24px; }
+  .footer-monogram { font-size: 1.2rem; }
+  .footer-brand { font-size: 0.95rem; }
+  .copyright { font-size: 0.66rem; letter-spacing: 0.06em; }
 }
