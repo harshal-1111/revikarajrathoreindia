@@ -6,48 +6,177 @@
 
 :root {
   --maroon: #56141d;
-  --maroon-dark: #3f0d14;
+  --maroon-light: #64202a;
+  --cream: #f0dcc4;
   --gold: #d9b98c;
-  --gold-soft: rgba(217, 185, 140, 0.35);
+  --gold-line: rgba(217, 170, 125, 0.55);
+  --gold-soft: rgba(217, 185, 140, 0.25);
 }
 
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(ellipse at center, var(--maroon) 0%, var(--maroon-dark) 100%);
+  background: var(--maroon);
   color: var(--gold);
   font-family: "Jost", sans-serif;
+  overflow-x: hidden;
 }
 
 /* Header */
 .header {
-  padding: 36px 16px 20px;
+  position: relative;
+  z-index: 2;
+  padding: 28px 16px;
   text-align: center;
+  border-bottom: 1px solid var(--gold-soft);
 }
 
 .brand {
   font-family: "Cormorant Garamond", serif;
   font-weight: 500;
-  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  font-size: clamp(1rem, 3.5vw, 2rem);
   letter-spacing: 0.25em;
+  padding-left: 0.25em; /* balances trailing letter-spacing */
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--cream);
+}
+
+/* Coming soon section */
+.hero {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 560px;
+  padding: 60px 16px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #5a1720 0%, var(--maroon) 60%, #4c111a 100%);
+}
+
+/* Decorative circles */
+.circle,
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.circle {
+  width: 44vw;
+  height: 44vw;
+  min-width: 260px;
+  min-height: 260px;
+  background: radial-gradient(circle at center, var(--maroon-light), rgba(100, 32, 42, 0.4));
+}
+
+.ring {
+  border: 1px solid var(--gold-line);
+}
+
+.circle-tl { top: 0; left: 0; transform: translate(-50%, -50%); }
+
+.ring-tl-inner {
+  top: 0; left: 0;
+  width: 33vw; height: 33vw;
+  min-width: 190px; min-height: 190px;
+  transform: translate(-50%, -50%);
+}
+
+.ring-tl-outer {
+  top: 0; left: 0;
+  width: 54vw; height: 54vw;
+  min-width: 320px; min-height: 320px;
+  transform: translate(-50%, -50%);
+}
+
+.circle-br { bottom: 0; right: 0; transform: translate(50%, 50%); }
+
+.ring-br-inner {
+  bottom: 0; right: 0;
+  width: 33vw; height: 33vw;
+  min-width: 190px; min-height: 190px;
+  transform: translate(50%, 50%);
+}
+
+.ring-br-outer {
+  bottom: 0; right: 0;
+  width: 54vw; height: 54vw;
+  min-width: 320px; min-height: 320px;
+  transform: translate(50%, 50%);
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: fadeIn 1.2s ease-out;
+}
+
+/* Loader */
+.loader {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 48px;
+  animation: spin 1.4s steps(12) infinite;
+}
+
+.loader span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 30px;
+  margin-left: -5px;
+  border-radius: 6px;
+  transform-origin: 5px 55px;
+  transform: rotate(calc(var(--i) * 30deg));
+  background: #e3c2c2;
+  opacity: 0.55;
+}
+
+.loader span:nth-child(1) { background: #8c3a1c; opacity: 1; }
+.loader span:nth-child(2) { background: #b4583a; opacity: 1; }
+.loader span:nth-child(3) { background: #c26a4c; opacity: 0.95; }
+.loader span:nth-child(4) { background: #c87a5e; opacity: 0.9; }
+.loader span:nth-child(5) { background: #cc8a72; opacity: 0.85; }
+.loader span:nth-child(6) { background: #d29a86; opacity: 0.8; }
+.loader span:nth-child(7) { background: #d8a99a; opacity: 0.75; }
+.loader span:nth-child(8) { background: #ddb6ac; opacity: 0.7; }
+.loader span:nth-child(9) { background: #e0bdb6; opacity: 0.68; }
+.loader span:nth-child(10) { background: #e3c2c0; opacity: 0.65; }
+.loader span:nth-child(11) { background: #e3c4c4; opacity: 0.62; }
+.loader span:nth-child(12) { background: #e3c6c6; opacity: 0.6; }
+
+/* Text */
+.title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--cream);
 }
 
 .divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  margin-top: 14px;
-  font-size: 0.8rem;
+  gap: 18px;
+  margin: 28px auto 32px;
+  color: var(--gold);
+  font-size: 1.1rem;
 }
 
 .divider::before,
 .divider::after {
   content: "";
-  width: 80px;
+  width: clamp(70px, 14vw, 250px);
   height: 1px;
   background: linear-gradient(to right, transparent, var(--gold));
 }
@@ -56,28 +185,29 @@ body {
   background: linear-gradient(to left, transparent, var(--gold));
 }
 
-/* Image section */
-.hero {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 16px;
+.tagline {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(0.8rem, 1.6vw, 1.25rem);
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
-.hero img {
-  display: block;
-  width: 100%;
-  max-width: 1400px;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid var(--gold-soft);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-  animation: fadeIn 1.2s ease-out;
+.website {
+  margin-top: 72px;
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.8vw, 1.4rem);
+  letter-spacing: 0.18em;
+  padding-left: 0.18em;
+  color: var(--cream);
 }
 
 /* Footer */
 .footer {
+  position: relative;
+  z-index: 2;
   padding: 24px 16px;
   text-align: center;
   border-top: 1px solid var(--gold-soft);
@@ -91,15 +221,46 @@ body {
   opacity: 0.85;
 }
 
+/* Animations */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Tablet */
+@media (max-width: 900px) {
+  .hero { min-height: 520px; }
+  .loader { margin-bottom: 36px; }
+  .website { margin-top: 56px; }
+}
+
+/* Mobile */
 @media (max-width: 600px) {
-  .header { padding-top: 28px; }
-  .brand { letter-spacing: 0.15em; }
-  .divider::before,
-  .divider::after { width: 50px; }
-  .footer p { font-size: 0.75rem; }
+  .header { padding: 22px 16px; }
+  .brand { letter-spacing: 0.15em; padding-left: 0.15em; }
+
+  .hero { min-height: 480px; padding: 48px 16px; }
+
+  .loader {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 32px;
+  }
+  .loader span {
+    width: 7px;
+    height: 22px;
+    margin-left: -3.5px;
+    transform-origin: 3.5px 40px;
+  }
+
+  .title { font-size: clamp(1.5rem, 8.5vw, 2.2rem); letter-spacing: 0.18em; padding-left: 0.18em; }
+  .divider { margin: 22px auto 24px; gap: 12px; }
+  .tagline { letter-spacing: 0.18em; padding-left: 0.18em; line-height: 1.8; }
+  .website { margin-top: 48px; letter-spacing: 0.1em; padding-left: 0.1em; }
+
+  .footer p { font-size: 0.72rem; letter-spacing: 0.04em; }
 }
