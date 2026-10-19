@@ -666,7 +666,7 @@ body {
 /* Logo image in the coming-soon header */
 .brand img {
   display: block;
-  height: clamp(70px, 9vw, 96px);
+  height: clamp(54px, 6vw, 76px);
   width: auto;
   margin: 0 auto;
 }
