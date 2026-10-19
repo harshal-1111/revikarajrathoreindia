@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Us — Revikaraj Rathore India</title>
+<meta name="description" content="The founders, craftmanship, exhibitions and coverage of Revikaraj Rathore India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/images/favicon-rri.png?v=2">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+<script src="js/gate.js"></script>
+</head>
+<body data-grain="on" data-page="about">
+
+<header class="site-header" id="site-header">
+  <!-- Mobile bar -->
+  <div class="header-mobile">
+    <button class="burger" type="button" aria-label="Open menu" data-drawer-open><span></span><span></span><span></span></button>
+    <a href="home.html" class="brand brand--mobile"><img src="assets/images/logo-wordmark.png" alt="Revikaraj Rathore India" width="512" height="271"></a>
+    <a href="home.html#consultation" class="enq-icon" aria-label="Enquiries" data-scroll-consult>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="6" width="18" height="13"></rect><path d="M3 6 L12 13 L21 6"></path></svg>
+      <span class="badge" data-enquiry-count>0</span>
+    </a>
+  </div>
+
+  <!-- Desktop bar -->
+  <div class="header-desktop">
+    <div class="header-util-bar">
+      <div class="wrap header-util">
+        <span>Studio visits by appointment</span>
+        <span class="util-mid"><i></i>Couture womenswear, embroidered by hand<i></i></span>
+        <div><a href="shop.html#search">Search</a><a href="home.html#consultation" data-scroll-consult>Enquiries (<span data-enquiry-count>0</span>)</a></div>
+      </div>
+    </div>
+    <div class="wrap header-main">
+      <nav aria-label="Primary">
+        <a href="home.html" data-menu-close>Discover</a>
+        <a href="shop.html" data-menu="womens">Womenswear</a>
+        <a href="shop.html?category=bags" data-menu="acc">Accessories</a>
+      </nav>
+      <a href="home.html" class="brand brand--lockup" aria-label="Revikaraj Rathore India, home">
+        <img class="brand-mark" src="assets/images/logo-pictogram.png" alt="" width="382" height="382">
+        <span class="brand-rule" aria-hidden="true"></span>
+        <img class="brand-word" src="assets/images/logo-wordmark.png" alt="Revikaraj Rathore India" width="512" height="271">
+      </a>
+      <nav aria-label="Secondary">
+        <a href="home.html#consultation" data-menu-close data-scroll-consult>Bespoke Consultation</a>
+        <a href="about.html" data-menu="about">About Us</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Mega menus -->
+  <div class="mega" data-mega="womens" hidden>
+    <div class="wrap mega-grid">
+      <div>
+        <div class="eyebrow">Shop by Category</div>
+        <div class="mega-links"><a href="shop.html?category=sarees" class="mega-link">Sarees</a><a href="shop.html?category=handwork-sarees" class="mega-link">Handwork Sarees</a><a href="shop.html?category=printed-sarees" class="mega-link">Printed Sarees</a><a href="shop.html?category=poshaks" class="mega-link">Poshaks</a><a href="shop.html?category=lehenga" class="mega-link">Lehenga</a><a href="shop.html?category=fusionwear" class="mega-link">Fusionwear</a></div>
+      </div>
+      <div>
+        <div class="eyebrow">Shop by Collection</div>
+        <div class="mega-links"><a href="shop.html?collection=chaap" class="mega-link">Chaap</a><a href="shop.html?collection=nazar" class="mega-link">Nazar</a><a href="shop.html?collection=collection-2026" class="mega-link">Collection 2026</a><a href="shop.html?collection=collection-2025" class="mega-link">Collection 2025</a></div>
+      </div>
+      <a href="product.html" class="mega-feature">
+        <div><div class="slot"><img src="assets/images/featured-nazar.webp" alt="Nazar look: hand-embroidered saree, photographed with a Marwari horse" loading="lazy"></div></div>
+        <span>Nazar · Collection 2026</span>
+      </a>
+    </div>
+  </div>
+  <div class="mega" data-mega="acc" hidden>
+    <div class="wrap mega-small"><a href="shop.html?category=bags" class="mega-link">Bags</a><a href="shop.html?category=shawls-scarves" class="mega-link">Shawls/Scarves</a></div>
+  </div>
+  <div class="mega" data-mega="about" hidden>
+    <div class="wrap mega-small"><a href="about.html#founders" class="mega-link">Founders</a><a href="about.html#craftmanship" class="mega-link">Craftmanship</a><a href="about.html#exhibitions" class="mega-link">Exhibitions/Shows</a><a href="about.html#coverage" class="mega-link">Coverage</a></div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer-head">
+      <button class="drawer-close" type="button" aria-label="Close menu" data-drawer-close>×</button>
+      <div class="drawer-title">Revikaraj Rathore India</div>
+      <span></span>
+    </div>
+    <nav aria-label="Mobile">
+      <a href="home.html" class="drawer-row" data-drawer-close><span class="num">I</span><span class="title">Discover</span></a>
+      <div class="drawer-sec">
+        <button type="button" class="drawer-row" data-drawer-toggle><span class="num">II</span><span class="title">Womenswear</span><span class="sign">+</span></button>
+        <div class="drawer-sub">
+          <div>
+            <div class="eyebrow">Shop by Category</div>
+            <div class="links"><a href="shop.html?category=sarees" data-drawer-close>Sarees</a><a href="shop.html?category=handwork-sarees" data-drawer-close>Handwork Sarees</a><a href="shop.html?category=printed-sarees" data-drawer-close>Printed Sarees</a><a href="shop.html?category=poshaks" data-drawer-close>Poshaks</a><a href="shop.html?category=lehenga" data-drawer-close>Lehenga</a><a href="shop.html?category=fusionwear" data-drawer-close>Fusionwear</a></div>
+          </div>
+          <div>
+            <div class="eyebrow">Shop by Collection</div>
+            <div class="links"><a href="shop.html?collection=chaap" data-drawer-close>Chaap</a><a href="shop.html?collection=nazar" data-drawer-close>Nazar</a><a href="shop.html?collection=collection-2026" data-drawer-close>Collection 2026</a><a href="shop.html?collection=collection-2025" data-drawer-close>Collection 2025</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-sec">
+        <button type="button" class="drawer-row" data-drawer-toggle><span class="num">III</span><span class="title">Accessories</span><span class="sign">+</span></button>
+        <div class="drawer-sub">
+          <div>
+            <div class="eyebrow">Shop by Category</div>
+            <div class="links"><a href="shop.html?category=bags" data-drawer-close>Bags</a><a href="shop.html?category=shawls-scarves" data-drawer-close>Shawls/Scarves</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-sec">
+        <button type="button" class="drawer-row" data-drawer-toggle><span class="num">IV</span><span class="title">About Us</span><span class="sign">+</span></button>
+        <div class="drawer-sub">
+          <div>
+            <div class="eyebrow">The House</div>
+            <div class="links"><a href="about.html#founders" data-drawer-close>Founders</a><a href="about.html#craftmanship" data-drawer-close>Craftmanship</a><a href="about.html#exhibitions" data-drawer-close>Exhibitions/Shows</a><a href="about.html#coverage" data-drawer-close>Coverage</a></div>
+          </div>
+        </div>
+      </div>
+      <a href="home.html#consultation" class="drawer-row" data-scroll-consult><span class="num">V</span><span class="title">Bespoke Consultation</span></a>
+    </nav>
+    <div class="drawer-foot">
+      <a href="home.html#consultation" class="btn-solid" data-scroll-consult>Book an appointment</a>
+      <div class="drawer-util"><a href="shop.html#search" data-drawer-close>Search</a><a href="home.html#consultation" data-scroll-consult>Enquiries (<span data-enquiry-count>0</span>)</a></div>
+      <div class="drawer-note">Studio visits by appointment</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap crumbs">
+    <a href="home.html">Home</a><span>/</span><span class="crumb-current">About Us</span>
+  </div>
+
+  <section class="wrap page-head">
+    <div class="kicker">The House</div>
+    <h1>About Us</h1>
+    <div class="ornament"><span></span><span class="diamond"></span><span></span></div>
+    <nav class="page-subnav" aria-label="About sections">
+      <a href="#founders">Founders</a><a href="#craftmanship">Craftmanship</a><a href="#exhibitions">Exhibitions/Shows</a><a href="#coverage">Coverage</a>
+    </nav>
+  </section>
+
+  <section class="about-sec" id="founders">
+    <div class="wrap about-split">
+      <figure class="about-portrait">
+        <div class="oval"><div class="slot"><img src="assets/images/founder-usharaje-rathore.webp" alt="Usharaje Rathore, Co-Founder"></div></div>
+        <figcaption><span class="script">Usharaje Rathore</span><span class="eyebrow">Co-Founder</span></figcaption>
+      </figure>
+      <div class="about-copy">
+        <div class="eyebrow-12">I · Founders</div>
+        <h2>A house of hand, thread &amp; heirloom</h2>
+        <p>The founders set out to keep these crafts in everyday wear, pairing archival motifs with cuts made for the way women dress today. Each collection returns to the archive and carries something new out of it.</p>
+        <a href="home.html#consultation" class="link-rule">Book a bespoke consultation</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-sec about-sec--dark" id="craftmanship">
+    <div class="wrap about-split about-split--rev">
+      <div class="about-copy">
+        <div class="eyebrow-12">II · Craftmanship</div>
+        <h2>Made on the frame, by hand</h2>
+        <p>Every piece begins at a wooden frame, where our artisans work thread by thread in techniques passed down through their families. Zardozi, dabka and aari are laid by hand, and some drapes take a full season to finish.</p>
+      </div>
+      <div class="film-box" data-film>
+        <div class="slot"><video class="slot-video" preload="none" playsinline poster="assets/images/film-atelier-poster.webp" aria-label="Campaign film from the atelier" data-film-video><source src="assets/videos/atelier-film.mp4" type="video/mp4"></video></div>
+        <button type="button" class="play" aria-label="Play film" data-film-play><div>Play</div></button>
+      </div>
+    </div>
+    <div class="wrap craft-figs">
+      <figure><div class="slot"><img src="assets/images/hero-left-rose-detail.webp" alt="Hand-embroidered sequin rose" loading="lazy"></div><figcaption><span>Sequin rose</span><span>Fig. I</span></figcaption></figure>
+      <figure><div class="slot"><img src="assets/images/studio-craft-detail.webp" alt="Embroidered peonies and a crane on indigo silk" loading="lazy"></div><figcaption><span>Peony &amp; crane</span><span>Fig. II</span></figcaption></figure>
+      <figure><div class="slot"><img src="assets/images/product-pallu.webp" alt="Embroidered flower on an orange pallu" loading="lazy"></div><figcaption><span>The pallu</span><span>Fig. III</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="about-sec" id="exhibitions">
+    <div class="wrap about-note">
+      <div class="eyebrow-12">III · Exhibitions/Shows</div>
+      <h2>Exhibitions &amp; Shows</h2>
+      <p>Dates for upcoming exhibitions and trunk shows will be announced here. Subscribe to Letters from the atelier below to hear first.</p>
+    </div>
+  </section>
+
+  <section class="about-sec about-sec--tint" id="coverage">
+    <div class="wrap about-note">
+      <div class="eyebrow-12">IV · Coverage</div>
+      <h2>Coverage</h2>
+      <p>Press features and editorials about the house will be collected here.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-scallop"></div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="eyebrow">About Us</div>
+        <div class="footer-links"><a href="about.html#founders">Founders</a><a href="about.html#craftmanship">Craftmanship</a><a href="about.html#exhibitions">Exhibitions/Shows</a><a href="about.html#coverage">Coverage</a></div>
+      </div>
+      <div>
+        <div class="eyebrow">Womenswear</div>
+        <div class="footer-links"><a href="shop.html?category=sarees">Sarees</a><a href="shop.html?category=handwork-sarees">Handwork Sarees</a><a href="shop.html?category=printed-sarees">Printed Sarees</a><a href="shop.html?category=poshaks">Poshaks</a><a href="shop.html?category=lehenga">Lehenga</a><a href="shop.html?category=fusionwear">Fusionwear</a></div>
+      </div>
+      <div>
+        <div class="eyebrow">Accessories</div>
+        <div class="footer-links"><a href="shop.html?category=bags">Bags</a><a href="shop.html?category=shawls-scarves">Shawls/Scarves</a><a href="home.html#consultation" data-scroll-consult>Bespoke Consultation</a></div>
+      </div>
+      <div>
+        <div class="eyebrow">Collections</div>
+        <div class="footer-links"><a href="shop.html?collection=chaap">Chaap</a><a href="shop.html?collection=nazar">Nazar</a><a href="shop.html?collection=collection-2026">Collection 2026</a><a href="shop.html?collection=collection-2025">Collection 2025</a></div>
+      </div>
+      <div class="newsletter">
+        <div class="eyebrow">Letters from the atelier</div>
+        <p>New collections, studio films and exhibition dates, a few times a season.</p>
+        <form data-newsletter>
+          <input type="email" placeholder="Email address" aria-label="Email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <a href="home.html" class="wordmark"><img src="assets/images/logo-emblem.webp?v=2" alt="Revikaraj Rathore India" width="640" height="478" loading="lazy"></a>
+    <div class="footer-base">
+      <span>© 2026 Revikaraj Rathore India</span>
+      <!-- Add social links here once the URLs are confirmed: Instagram, YouTube, Privacy -->
+      <div><a href="#site-header">Back to top</a><button type="button" class="link-btn" data-gate-lock>Lock preview</button></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

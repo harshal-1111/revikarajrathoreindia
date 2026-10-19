@@ -43,7 +43,7 @@ body {
   z-index: 3;
   padding: 26px 16px 22px;
   text-align: center;
-  background: linear-gradient(to bottom, var(--maroon-dark), #48101a);
+  background: #57141D; /* matches the logo's own background */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -475,4 +475,198 @@ body {
   .footer { padding: 36px 16px 24px; }
   .footer-brand { font-size: 0.95rem; }
   .copyright { font-size: 0.66rem; letter-spacing: 0.06em; }
+}
+
+/* ================= Private preview gate ================= */
+.content > :nth-child(6) { animation-delay: 1.35s; }
+
+.gate { margin-top: 22px; }
+
+.gate-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border: 0;
+  border-bottom: 1px solid var(--gold-line);
+  background: none;
+  color: var(--gold);
+  font-family: "Jost", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.gate-open svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.gate-open:hover {
+  color: var(--cream);
+  border-bottom-color: var(--cream);
+}
+
+.gate-dialog {
+  width: min(92vw, 440px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--gold-line);
+  background: linear-gradient(to bottom, #5a1720, var(--maroon-dark));
+  color: var(--cream);
+  box-shadow: 0 0 0 6px var(--maroon-dark), 0 0 0 7px var(--gold-soft), 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
+.gate-dialog::backdrop {
+  background: rgba(20, 4, 7, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.gate-form {
+  position: relative;
+  padding: 44px 36px 36px;
+  text-align: center;
+}
+
+.gate-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gate-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.gate-ornament span {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+
+.gate-ornament span:last-child {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.gate-ornament i {
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+.gate-form h2 {
+  margin: 18px 0 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: 0.18em;
+  padding-left: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.gate-form > p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--gold);
+}
+
+.gate-field {
+  display: block;
+  margin-top: 26px;
+  text-align: left;
+}
+
+.gate-field span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.gate-field input {
+  width: 100%;
+  padding: 10px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--gold-line);
+  background: transparent;
+  color: var(--cream);
+  font-family: "Jost", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  outline: none;
+}
+
+.gate-field input:focus {
+  border-bottom-color: var(--cream);
+}
+
+.gate-error {
+  min-height: 1.4em;
+  margin-top: 10px;
+  font-family: "Jost", sans-serif;
+  font-size: 0.8rem;
+  color: #f2a9a0;
+}
+
+.gate-submit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: var(--maroon-dark);
+  font-family: "Jost", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.gate-submit:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+.gate-form.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+@media (max-width: 600px) {
+  .gate-form { padding: 40px 22px 28px; }
+  .gate-form h2 { font-size: 1.6rem; }
+}
+
+/* Logo image in the coming-soon header */
+.brand img {
+  display: block;
+  height: clamp(70px, 9vw, 96px);
+  width: auto;
+  margin: 0 auto;
 }

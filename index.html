@@ -9,13 +9,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/images/favicon-rri.png?v=2">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- Header -->
   <header class="header">
-    <h1 class="brand">Revikaraj Rathore India</h1>
+    <h1 class="brand"><img src="assets/images/logo-wordmark.png" alt="Revikaraj Rathore India" width="512" height="271"></h1>
     <div class="ornament">
       <span class="dot"></span>
       <span class="diamond"></span>
@@ -74,8 +76,31 @@
       <p class="tagline">A more exquisite experience awaits</p>
 
       <a class="website" href="https://www.revikarajrathoreindia.com">www.revikarajrathoreindia.com</a>
+
+      <div class="gate">
+        <button type="button" class="gate-open" data-gate-open>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+          <span data-gate-label>Enter with password</span>
+        </button>
+      </div>
     </div>
   </main>
+
+  <!-- Password dialog -->
+  <dialog class="gate-dialog" data-gate-dialog aria-labelledby="gate-title">
+    <form method="dialog" class="gate-form" data-gate-form>
+      <button type="button" class="gate-close" aria-label="Close" data-gate-close>&times;</button>
+      <div class="gate-ornament"><span></span><i></i><span></span></div>
+      <h2 id="gate-title">Private Preview</h2>
+      <p>The website is not public yet. Enter the preview password to continue.</p>
+      <label class="gate-field">
+        <span>Password</span>
+        <input type="password" name="password" autocomplete="current-password" required data-gate-input>
+      </label>
+      <p class="gate-error" role="alert" data-gate-error></p>
+      <button type="submit" class="gate-submit">Enter the website</button>
+    </form>
+  </dialog>
 
   <!-- Footer -->
   <footer class="footer">
@@ -83,6 +108,61 @@
     <p class="footer-brand">Revikaraj Rathore India</p>
     <p class="copyright">Copyright &copy; 2026 Revikaraj Rathore India - All Rights Reserved.</p>
   </footer>
+
+  <script>
+    (function () {
+      // Must match TOKEN in js/gate.js: SHA-256 of "rri-preview:" + password.
+      var KEY = 'rri-preview';
+      var TOKEN = 'dd5ba3c0cf4561100f51b45635e5144ccf5172f78206abc0bb4c2e2396f1226a';
+      var $ = function (sel) { return document.querySelector(sel); };
+      var dialog = $('[data-gate-dialog]');
+      var form = $('[data-gate-form]');
+      var input = $('[data-gate-input]');
+      var error = $('[data-gate-error]');
+
+      function unlocked() {
+        try { return localStorage.getItem(KEY) === TOKEN; } catch (e) { return false; }
+      }
+      function hash(text) {
+        var data = new TextEncoder().encode('rri-preview:' + text);
+        return crypto.subtle.digest('SHA-256', data).then(function (buf) {
+          return Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+        });
+      }
+
+      if (unlocked()) $('[data-gate-label]').textContent = 'Enter the website';
+
+      $('[data-gate-open]').addEventListener('click', function () {
+        if (unlocked()) { location.href = 'home.html'; return; }
+        error.textContent = '';
+        form.reset();
+        dialog.showModal();
+        input.focus();
+      });
+      $('[data-gate-close]').addEventListener('click', function () { dialog.close(); });
+      dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!window.crypto || !crypto.subtle) {
+          error.textContent = 'Please open this page over a secure (https) connection.';
+          return;
+        }
+        hash(input.value).then(function (h) {
+          if (h === TOKEN) {
+            try { localStorage.setItem(KEY, TOKEN); } catch (err) { /* storage unavailable */ }
+            location.href = 'home.html';
+          } else {
+            error.textContent = 'That password is not correct. Please try again.';
+            form.classList.remove('shake');
+            void form.offsetWidth;
+            form.classList.add('shake');
+            input.select();
+          }
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
