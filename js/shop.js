@@ -86,6 +86,21 @@
   }
 
   search.addEventListener('input', render);
-  if (location.hash === '#search') search.focus();
+
+  // Phones: filters live in a full-screen sheet
+  var openBtn = $('[data-filter-open]');
+  function setSheet(open) {
+    document.body.classList.toggle('filters-open', open);
+    document.body.classList.toggle('no-scroll', open);
+    openBtn.setAttribute('aria-expanded', String(open));
+    if (open) search.focus(); else openBtn.focus();
+  }
+  openBtn.addEventListener('click', function () { setSheet(true); });
+  $$('[data-filter-close]').forEach(function (b) { b.addEventListener('click', function () { setSheet(false); }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.body.classList.contains('filters-open')) setSheet(false);
+  });
+  if (kind) openBtn.lastChild.textContent = 'Filter · ' + label;
+  if (location.hash === '#search') { if (window.matchMedia('(max-width: 900px)').matches) setSheet(true); else search.focus(); }
   render();
 })();

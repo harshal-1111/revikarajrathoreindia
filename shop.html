@@ -135,7 +135,11 @@
 
   <section class="wrap shop">
     <div class="shop-layout">
-      <aside class="shop-side" aria-label="Filters">
+      <aside class="shop-side" id="shop-filters" aria-label="Filters">
+        <div class="side-head">
+          <span>Filter &amp; Search</span>
+          <button type="button" class="side-close" aria-label="Close filters" data-filter-close>&times;</button>
+        </div>
         <label class="side-search" id="search">
           <span class="side-title">Search</span>
           <input type="search" placeholder="Name or colour" data-shop-search>
@@ -148,6 +152,7 @@
           <div class="side-title">Collection</div>
           <nav class="side-list" aria-label="Collections"><a href="shop.html?collection=chaap" data-chip="collection:chaap"><span>Chaap</span></a><a href="shop.html?collection=nazar" data-chip="collection:nazar"><span>Nazar</span></a><a href="shop.html?collection=collection-2026" data-chip="collection:collection-2026"><span>Collection 2026</span></a><a href="shop.html?collection=collection-2025" data-chip="collection:collection-2025"><span>Collection 2025</span></a></nav>
         </div>
+        <button type="button" class="btn-solid side-apply" data-filter-close>Show pieces</button>
         <div class="side-note">
           <p>Every piece is made in our atelier and finished by hand. Prices are shared on request.</p>
           <a href="home.html#consultation" class="link-rule">Book a consultation</a>
@@ -161,7 +166,12 @@
             <h1 data-shop-title>All Pieces</h1>
             <p class="shop-intro" data-shop-intro hidden></p>
           </div>
-          <div class="shop-count" data-shop-count></div>
+          <div class="shop-bar-end">
+            <div class="shop-count" data-shop-count></div>
+            <button type="button" class="shop-filter-btn" aria-controls="shop-filters" aria-expanded="false" data-filter-open>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filter &amp; Search
+            </button>
+          </div>
         </div>
 
         <div class="card-grid" data-shop-grid></div>

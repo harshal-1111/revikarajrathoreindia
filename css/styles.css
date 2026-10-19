@@ -227,14 +227,18 @@ button.play[hidden] { display: none; }
 
 @media (max-width: 720px) {
   .hero-grid { grid-template-columns: minmax(0, 1fr); }
-  /* Phones: the side arches become a small staggered pair under the plate */
-  .hero-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
-  .hero-plate { grid-column: 1 / -1; order: -1; }
-  .hero-left, .hero-right { padding-top: 0; margin-top: 22px; }
-  .hero-left { justify-content: flex-end; }
-  .hero-right { display: flex; justify-content: flex-start; padding-top: 40px; }
-  .hero-left .hero-side { width: min(100%, 150px); }
-  .hero-right .hero-side { width: min(100%, 130px); }
+  /* Phones: a swipeable carousel — the plate sits centred with ~20% of each side card peeking in */
+  .hero { padding-left: 0; padding-right: 0; }
+  .hero-grid { display: flex; align-items: center; gap: 3vw; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 21vw; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .hero-grid::-webkit-scrollbar { display: none; }
+  .hero-grid > * { flex: 0 0 58vw; scroll-snap-align: center; }
+  .hero-left, .hero-right { display: block; padding-top: 0; }
+  .hero-left .hero-side, .hero-right .hero-side { width: 100%; aspect-ratio: 3 / 4.4; }
+  .hero-plate { padding: 22px 14px 18px; }
+  .hero-plate h1 { font-size: 46px; }
+  .hero-plate .eyebrow { letter-spacing: .2em; }
+  .hero-plate .sub { font-size: 10px; letter-spacing: .14em; margin: 10px 0 16px; }
+  .hero-plate .cta { font-size: 11px; letter-spacing: .16em; text-align: center; }
   .hero-plate { padding: 28px 22px 22px; }
 }
 
@@ -534,25 +538,35 @@ button.play[hidden] { display: none; }
 .shop-empty h2 { margin: 18px 0 10px; font-family: var(--serif-display); font-style: italic; font-size: clamp(28px, 3vw, 38px); }
 .shop-empty p { margin: 0 0 26px; color: var(--muted-2); }
 .shop-empty .btn-solid { display: inline-block; padding: 15px 28px; }
+.side-head, .side-apply, .shop-filter-btn { display: none; }
+.shop-bar-end { display: flex; align-items: center; gap: 16px; }
 @media (max-width: 900px) {
-  /* Phones: title first, then a compact filter strip, then the pieces */
-  .shop-layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
-  .shop-main { display: contents; }
-  .shop-bar { order: 1; margin-bottom: 18px; }
-  .shop-side { order: 2; position: static; padding: 0 0 18px; margin-bottom: 22px; border-right: 0; border-bottom: var(--rule); gap: 14px; }
-  .shop .card-grid { order: 3; }
-  .shop-empty { order: 4; }
-  .side-search .side-title { display: none; }
-  .side-search input { font-size: 16px; }
-  .side-list { display: flex; flex-wrap: nowrap; gap: 8px; overflow-x: auto; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); scrollbar-width: none; }
-  .side-list::-webkit-scrollbar { display: none; }
-  .side-title { margin-bottom: 8px; padding-bottom: 6px; }
-  .side-list a { flex: none; white-space: nowrap; padding: 6px 12px; border: 1px solid rgba(176, 141, 87, .6); font-size: 13px; letter-spacing: .08em; }
-  .side-list a::before { display: none; }
-  .side-list a.on { background: var(--oxblood); border-color: var(--oxblood); color: var(--cream); font-style: normal; }
-  .side-list a.on em { color: var(--parchment); }
+  /* Phones: compact title bar with a Filter button; filters open as a full-screen sheet; two pieces per row */
+  .shop-layout { display: block; }
+  .shop-side { position: fixed; inset: 0; z-index: 160; display: none; align-content: start; gap: 22px; padding: 0 var(--gutter) 32px; overflow-y: auto; background: var(--cream); border-right: 0; }
+  body.filters-open .shop-side { display: grid; }
+  .side-head { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; margin: 0 calc(var(--gutter) * -1); padding: 12px var(--gutter); background: var(--logo-maroon); color: var(--parchment); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; }
+  .side-close { width: 40px; height: 40px; border: 0; background: none; color: var(--parchment); font-size: 30px; line-height: 1; cursor: pointer; }
+  .side-apply { display: block; width: 100%; }
   .side-note { display: none; }
-  .shop-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .shop { padding-top: 0; }
+  .shop-bar { align-items: center; gap: 12px; padding-bottom: 14px; margin-bottom: 18px; }
+  .shop-bar .kicker { display: none; }
+  .shop-bar h1 { font-size: 30px; }
+  .shop-intro { font-size: 15px; margin-top: 6px; }
+  .shop-bar-end { flex-direction: column; align-items: flex-end; gap: 6px; }
+  .shop-count { font-size: 10.5px; }
+  .shop-filter-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--oxblood); background: transparent; color: var(--oxblood); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+  .shop-filter-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+  .shop .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+  .shop .card-frame { padding: 5px; }
+  .shop .card-meta { font-size: 9px; letter-spacing: .14em; margin-bottom: 6px; }
+  .shop .card-meta span:first-child { display: none; }
+  .shop .card-name { font-size: 16px; margin-top: 10px; }
+  .shop .price-note { font-size: 13px; }
+  .shop-empty { padding: 32px 20px; margin-top: 8px; }
+  .shop-empty h2 { font-size: 26px; }
+  .shop-empty p { font-size: 16px; }
 }
 
 /* ---------- About ---------- */

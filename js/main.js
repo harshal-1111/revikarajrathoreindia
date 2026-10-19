@@ -220,6 +220,18 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
   }
 
+  /* ---------- Hero carousel on phones: start on the centre plate ---------- */
+  var heroGrid = $('.hero-grid');
+  var heroPlate = $('.hero-plate');
+  if (heroGrid && heroPlate) {
+    var centrePlate = function () {
+      if (heroGrid.scrollWidth <= heroGrid.clientWidth) return;
+      heroGrid.scrollLeft = heroPlate.offsetLeft - (heroGrid.clientWidth - heroPlate.offsetWidth) / 2;
+    };
+    centrePlate();
+    window.addEventListener('load', centrePlate);
+  }
+
   /* ---------- Full-width film (home) ---------- */
   var heroFilm = $('[data-film-hero]');
   if (heroFilm) {
