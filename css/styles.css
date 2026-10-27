@@ -636,30 +636,30 @@ button.play[hidden] { display: none; }
 .footer-scallop { position: absolute; left: 0; right: 0; top: -10px; height: 10px; background: radial-gradient(circle at 50% 100%, var(--emblem-maroon) 9px, transparent 9.5px) 0 0 / 18px 10px repeat-x; }
 .site-footer .wrap { padding-top: clamp(64px, 7vw, 96px); padding-bottom: 32px; }
 .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 40px; }
-.footer-grid .eyebrow { color: var(--gold); margin-bottom: 16px; }
-.footer-links { display: grid; gap: 6px; }
-.footer-links a { color: var(--cream); font-size: 17px; }
-.footer-links a:hover { color: var(--gold); }
+.footer-grid .eyebrow { color: #DFBE7E; margin-bottom: 16px; font-weight: 500; letter-spacing: .24em; }
+.footer-links { display: grid; gap: 8px; }
+.footer-links a { color: #FFFFFF; font-size: 17px; opacity: .92; transition: color .2s ease, opacity .2s ease; }
+.footer-links a:hover { color: #DFBE7E; opacity: 1; }
 .newsletter { grid-column: span 2; min-width: 0; }
-.newsletter p { margin: 0 0 14px; font-size: 17px; color: var(--parchment); }
-.newsletter form { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-bottom: 1px solid var(--gold); }
-.newsletter input { border: 0; background: transparent; padding: 10px 0; font-size: 18px; color: var(--cream); outline: none; min-width: 0; }
-.newsletter input::placeholder { color: rgba(243, 236, 223, .6); }
-.newsletter button { border: 0; background: transparent; color: var(--cream); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
-.newsletter button:hover { color: var(--gold); }
+.newsletter p { margin: 0 0 14px; font-size: 17px; color: rgba(255, 255, 255, .9); }
+.newsletter form { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-bottom: 1px solid #DFBE7E; }
+.newsletter input { border: 0; background: transparent; padding: 10px 0; font-size: 18px; color: #FFFFFF; outline: none; min-width: 0; }
+.newsletter input::placeholder { color: rgba(255, 255, 255, .65); }
+.newsletter button { border: 0; background: transparent; color: #DFBE7E; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: color .2s ease; }
+.newsletter button:hover { color: #FFFFFF; }
 .wordmark { display: block; margin: clamp(56px, 7vw, 96px) auto 0; width: min(100%, 320px); }
 .wordmark img { width: 100%; height: auto; }
-.footer-base { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(201, 168, 106, .45); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--parchment); }
+.footer-base { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(223, 190, 126, .35); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .82); }
 .footer-base div { display: flex; flex-wrap: wrap; gap: 12px 24px; }
-.footer-base a { color: var(--parchment); }
-.footer-base a:hover { color: var(--gold); }
+.footer-base a { color: rgba(255, 255, 255, .82); transition: color .2s ease; }
+.footer-base a:hover { color: #DFBE7E; }
 @media (max-width: 459px) {
   .newsletter { grid-column: 1 / -1; }
 }
 
 /* ---------- Shared: footer buttons ---------- */
-.link-btn { border: 0; padding: 0; background: none; cursor: pointer; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--parchment); }
-.link-btn:hover { color: var(--gold); }
+.link-btn { border: 0; padding: 0; background: none; cursor: pointer; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .82); transition: color .2s ease; }
+.link-btn:hover { color: #DFBE7E; }
 .crumb-current { color: var(--ink); }
 
 /* ---------- Shop: filters left, pieces right ---------- */
