@@ -8,10 +8,10 @@
 
   /* ---------- Enquiry count (kept for the browsing session) ---------- */
   function readCount() {
-    try { return parseInt(sessionStorage.getItem('atelier-enquiries'), 10) || 0; } catch (e) { return 0; }
+    try { return parseInt(sessionStorage.getItem('rri-enquiries') || sessionStorage.getItem('atelier-enquiries'), 10) || 0; } catch (e) { return 0; }
   }
   function writeCount(n) {
-    try { sessionStorage.setItem('atelier-enquiries', String(n)); } catch (e) { /* storage unavailable */ }
+    try { sessionStorage.setItem('rri-enquiries', String(n)); } catch (e) { /* storage unavailable */ }
     $$('[data-enquiry-count]').forEach(function (el) { el.textContent = n; });
   }
   writeCount(readCount());

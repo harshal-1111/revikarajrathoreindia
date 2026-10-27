@@ -1,5 +1,5 @@
 /**
- * Revikaraj Rathore India — Luxury Atelier Admin Management System
+ * Revikaraj Rathore India — Administration Management System
  */
 (function () {
   'use strict';
@@ -286,7 +286,7 @@
 
     if (validUser && validPass) {
       sessionStorage.setItem(STORAGE_KEYS.AUTH, 'true');
-      showToast('Welcome to Revikaraj Rathore India Atelier Portal');
+      showToast('Welcome to Revikaraj Rathore India Portal');
       renderView();
     } else {
       const err = $('#login-error');
@@ -336,7 +336,7 @@
     });
     const pageTitle = $('#page-title');
     const tabTitles = {
-      overview: 'Atelier Overview',
+      overview: 'Revikaraj Rathore India Overview',
       consultations: 'Bespoke Appointments & Consultations',
       enquiries: 'Couture Price & Custom Inquiries',
       products: 'Lookbook & Garment Catalog',
@@ -405,7 +405,7 @@
             </div>
           </div>
           <div class="metric-value">${pendingCount}</div>
-          <div class="metric-sub"><span class="metric-trend">+2 new</span> awaiting atelier confirmation</div>
+          <div class="metric-sub"><span class="metric-trend">+2 new</span> awaiting confirmation</div>
         </div>
 
         <div class="metric-card">
@@ -445,7 +445,7 @@
       <!-- Quick Actions Bar -->
       <div class="section-panel">
         <div class="panel-header">
-          <h2 class="panel-title">Quick Atelier Operations</h2>
+          <h2 class="panel-title">Quick Operations</h2>
         </div>
         <div style="padding: 24px; display: flex; flex-wrap: wrap; gap: 14px;">
           <button class="btn-primary" data-action="new-consult">
@@ -979,7 +979,7 @@
       <div class="settings-grid">
         <div class="setting-card">
           <h2 class="setting-title">Private Preview Gatekeeper</h2>
-          <p class="setting-desc">Locks public viewing behind a luxury password gate while the atelier prepares the official public launch.</p>
+          <p class="setting-desc">Locks public viewing behind a luxury password gate while Revikaraj Rathore India prepares the official public launch.</p>
           
           <div class="toggle-row">
             <div>
