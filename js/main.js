@@ -112,22 +112,225 @@
 
   /* ---------- Appointment / enquiry forms ---------- */
   var codes = ['+91', '+1', '+44', '+971', '+65', '+61', '+974', '+966'];
-  var dates = [];
-  for (var d = new Date(), n = 0; dates.length < 12 && n < 30; n++) {
-    d.setDate(d.getDate() + 1);
-    if (d.getDay() !== 0) dates.push(d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }));
-  }
   $$('[data-codes]').forEach(function (sel) {
     codes.forEach(function (c) { sel.add(new Option(c, c)); });
   });
-  $$('[data-dates]').forEach(function (sel) {
-    dates.forEach(function (v) { sel.add(new Option(v, v)); });
-  });
+
+  /* Modern & Compact Date & Time Picker */
+  var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  function initPicker(form) {
+    var datePicker = $('[data-picker="date"]', form);
+    var timePicker = $('[data-picker="time"]', form);
+    if (!datePicker || !timePicker) return;
+
+    var dateTrigger = $('[data-picker-trigger="date"]', datePicker);
+    var dateInput = $('[data-picker-input="date"]', datePicker);
+    var dateLabel = $('[data-picker-label="date"]', datePicker);
+    var calPopover = $('[data-picker-popover="date"]', datePicker);
+    var calMonth = $('[data-cal-month]', calPopover);
+    var calDays = $('[data-cal-days]', calPopover);
+    var calPrev = $('[data-cal-prev]', calPopover);
+    var calNext = $('[data-cal-next]', calPopover);
+
+    var timeTrigger = $('[data-picker-trigger="time"]', timePicker);
+    var timeInput = $('[data-picker-input="time"]', timePicker);
+    var timeLabel = $('[data-picker-label="time"]', timePicker);
+    var timePopover = $('[data-picker-popover="time"]', timePicker);
+    var timePills = $$('.time-pill', timePopover);
+
+    var now = new Date();
+    var viewYear = now.getFullYear();
+    var viewMonth = now.getMonth();
+    var selectedDate = null;
+
+    function closeAll() {
+      calPopover.hidden = true;
+      timePopover.hidden = true;
+      datePicker.classList.remove('open');
+      timePicker.classList.remove('open');
+      dateTrigger.setAttribute('aria-expanded', 'false');
+      timeTrigger.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleDate() {
+      var isOpen = !calPopover.hidden;
+      closeAll();
+      if (!isOpen) {
+        calPopover.hidden = false;
+        datePicker.classList.add('open');
+        dateTrigger.setAttribute('aria-expanded', 'true');
+        dateTrigger.classList.remove('picker-error');
+        renderCalendar();
+      }
+    }
+
+    function toggleTime() {
+      var isOpen = !timePopover.hidden;
+      closeAll();
+      if (!isOpen) {
+        timePopover.hidden = false;
+        timePicker.classList.add('open');
+        timeTrigger.setAttribute('aria-expanded', 'true');
+        timeTrigger.classList.remove('picker-error');
+      }
+    }
+
+    function renderCalendar() {
+      calMonth.textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+      var isCurrentMonth = viewYear === now.getFullYear() && viewMonth === now.getMonth();
+      calPrev.disabled = isCurrentMonth;
+
+      calDays.innerHTML = '';
+
+      var firstDay = new Date(viewYear, viewMonth, 1).getDay();
+      var leadingEmpty = (firstDay + 6) % 7; // Monday-first
+
+      for (var i = 0; i < leadingEmpty; i++) {
+        var empty = document.createElement('div');
+        empty.className = 'cal-day empty';
+        calDays.appendChild(empty);
+      }
+
+      var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+      var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cal-day';
+        btn.textContent = d;
+
+        var curDate = new Date(viewYear, viewMonth, d);
+        if (curDate.getTime() === todayMidnight.getTime()) {
+          btn.classList.add('today');
+        }
+
+        var isSunday = curDate.getDay() === 0;
+        var isPast = curDate < todayMidnight;
+
+        if (isPast || isSunday) {
+          btn.disabled = true;
+          if (isSunday) btn.title = 'Studio closed on Sundays';
+        } else {
+          if (selectedDate && curDate.getTime() === selectedDate.getTime()) {
+            btn.classList.add('selected');
+          }
+          btn.addEventListener('click', (function (dateObj) {
+            return function (e) {
+              e.stopPropagation();
+              selectedDate = dateObj;
+              var dateStr = dateObj.toLocaleDateString('en-GB', {
+                weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+              });
+              dateInput.value = dateStr;
+              dateLabel.textContent = dateStr;
+              dateLabel.classList.remove('is-placeholder');
+              dateTrigger.classList.remove('picker-error');
+              closeAll();
+
+              if (!timeInput.value) {
+                setTimeout(function () { toggleTime(); }, 120);
+              }
+            };
+          })(curDate));
+        }
+
+        calDays.appendChild(btn);
+      }
+    }
+
+    calPrev.addEventListener('click', function (e) {
+      e.stopPropagation();
+      viewMonth--;
+      if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+      renderCalendar();
+    });
+
+    calNext.addEventListener('click', function (e) {
+      e.stopPropagation();
+      viewMonth++;
+      if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+      renderCalendar();
+    });
+
+    dateTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleDate();
+    });
+
+    timeTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleTime();
+    });
+
+    timePills.forEach(function (pill) {
+      pill.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var val = pill.getAttribute('data-time-slot');
+        timeInput.value = val;
+        timeLabel.textContent = val;
+        timeLabel.classList.remove('is-placeholder');
+        timeTrigger.classList.remove('picker-error');
+        timePills.forEach(function (p) { p.classList.toggle('selected', p === pill); });
+        closeAll();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!form.contains(e.target)) closeAll();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    renderCalendar();
+
+    form.addEventListener('submit', function (e) {
+      if (!dateInput.value) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        dateTrigger.classList.add('picker-error');
+        toggleDate();
+        return false;
+      }
+      if (!timeInput.value) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        timeTrigger.classList.add('picker-error');
+        toggleTime();
+        return false;
+      }
+    }, true);
+  }
+
+  $$('[data-appointment-form]').forEach(initPicker);
 
   $$('[data-appointment-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var panel = form.closest('[data-form-panel]');
+      
+      var formData = new FormData(form);
+      var consultItem = {
+        id: 'CON-' + Math.floor(100 + Math.random() * 900),
+        name: formData.get('name') || 'Client',
+        phone: (formData.get('code') || '') + ' ' + (formData.get('phone') || ''),
+        email: formData.get('email') || '',
+        date: formData.get('date') || 'Upcoming',
+        time: formData.get('time') || '03:00 PM',
+        type: 'Studio Visit',
+        occasion: 'Bespoke Couture Consultation',
+        status: 'pending'
+      };
+      
+      try {
+        var existing = JSON.parse(localStorage.getItem('rri_admin_consultations')) || [];
+        existing.unshift(consultItem);
+        localStorage.setItem('rri_admin_consultations', JSON.stringify(existing));
+      } catch (err) {}
+
       form.hidden = true;
       $('[data-thanks]', panel).hidden = false;
       if (form.hasAttribute('data-counts-enquiry')) writeCount(readCount() + 1);
