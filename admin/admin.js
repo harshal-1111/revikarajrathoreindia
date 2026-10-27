@@ -221,16 +221,21 @@
     campaignTitle: 'Collection 2026 · The Film — Nazar',
     heroTagline: 'Couture womenswear, embroidered by hand',
     gateEnabled: true,
-    previewPassword: 'rri'
+    previewPassword: 'rri',
+    enable360: false
   };
 
   // State Management
+  const savedSettings = JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS)) || {};
+  const mergedSettings = Object.assign({}, INITIAL_SETTINGS, savedSettings);
+  if (mergedSettings.enable360 === undefined) mergedSettings.enable360 = false;
+
   const state = {
     consultations: JSON.parse(localStorage.getItem(STORAGE_KEYS.CONSULTATIONS)) || INITIAL_CONSULTATIONS,
     enquiries: JSON.parse(localStorage.getItem(STORAGE_KEYS.ENQUIRIES)) || INITIAL_ENQUIRIES,
     products: JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS)) || INITIAL_PRODUCTS,
     subscribers: JSON.parse(localStorage.getItem(STORAGE_KEYS.SUBSCRIBERS)) || INITIAL_SUBSCRIBERS,
-    settings: JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS)) || INITIAL_SETTINGS,
+    settings: mergedSettings,
     activeTab: 'overview'
   };
 
@@ -241,6 +246,7 @@
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products));
       localStorage.setItem(STORAGE_KEYS.SUBSCRIBERS, JSON.stringify(state.subscribers));
       localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(state.settings));
+      localStorage.setItem('rri_enable_360', state.settings.enable360 ? 'true' : 'false');
     } catch (e) {
       console.warn('Storage unavailable', e);
     }
@@ -781,6 +787,26 @@
           </div>
         </div>
 
+        <!-- Lookbook 360° Interactive Viewer Controller -->
+        <div style="margin: 0 24px 20px; padding: 18px 22px; background: rgba(22, 14, 15, 0.7); border: 1px solid var(--gold-dim); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 42px; height: 42px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><path d="M16 12a4 4 0 1 1-8 0"></path><polyline points="12 2 12 6"></polyline></svg>
+            </div>
+            <div>
+              <div style="font-family: var(--serif-display); font-size: 16px; color: var(--parchment); letter-spacing: 0.04em;">360° Interactive Ensemble Viewer</div>
+              <div class="table-sub" style="margin-top: 3px;">Control visibility of the 360° rotational turntable view on public product pages (Currently: <span id="label-360-inline" style="color:${state.settings.enable360 ? 'var(--gold-bright)' : 'var(--text-muted)'}; font-weight: 500;">${state.settings.enable360 ? 'Enabled' : 'Disabled / Hidden'}</span>)</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: ${state.settings.enable360 ? 'var(--gold-bright)' : 'var(--text-muted)'}; font-weight: 500;" id="label-360-status">${state.settings.enable360 ? 'Active' : 'Hidden'}</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-360-viewer" ${state.settings.enable360 ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
         <div class="product-grid">
           ${state.products.map(p => `
             <div class="product-item-card" data-product-id="${p.id}">
@@ -813,6 +839,25 @@
 
   function attachProductsEvents() {
     $('#btn-add-product')?.addEventListener('click', () => openProductModal(null));
+
+    const toggle360 = $('#toggle-360-viewer');
+    if (toggle360) {
+      toggle360.addEventListener('change', () => {
+        state.settings.enable360 = toggle360.checked;
+        persist();
+        const lbl = $('#label-360-status');
+        const inlineLbl = $('#label-360-inline');
+        if (lbl) {
+          lbl.textContent = state.settings.enable360 ? 'Active' : 'Hidden';
+          lbl.style.color = state.settings.enable360 ? 'var(--gold-bright)' : 'var(--text-muted)';
+        }
+        if (inlineLbl) {
+          inlineLbl.textContent = state.settings.enable360 ? 'Enabled' : 'Disabled / Hidden';
+          inlineLbl.style.color = state.settings.enable360 ? 'var(--gold-bright)' : 'var(--text-muted)';
+        }
+        showToast(state.settings.enable360 ? '360° product viewer enabled on lookbook pages' : '360° product viewer disabled and hidden on product page');
+      });
+    }
 
     $$('[data-edit-prod]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1017,6 +1062,23 @@
             Direct Login: <strong>admin</strong> / <strong>rri2026</strong>
           </div>
         </div>
+
+        <div class="setting-card">
+          <h2 class="setting-title">Product Page 360° Turntable</h2>
+          <p class="setting-desc">Enable or disable the interactive 360° rotational garment turntable view across all lookbook product pages.</p>
+          
+          <div class="toggle-row">
+            <div>
+              <div class="primary-text">360° Turntable View</div>
+              <div class="table-sub">When disabled, 360° tab, angles, and rotational controls are hidden on public product pages</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-security-360" ${state.settings.enable360 ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="table-sub" style="margin-top:6px;">Current Status: <strong style="color:${state.settings.enable360 ? 'var(--gold-bright)' : 'var(--text-muted)'};">${state.settings.enable360 ? 'Enabled' : 'Disabled (Hidden on product pages)'}</strong></div>
+        </div>
       </div>
     `;
   }
@@ -1029,6 +1091,13 @@
       state.settings.previewPassword = pass;
       persist();
       showToast('Gate security settings saved');
+    });
+
+    $('#toggle-security-360')?.addEventListener('change', (e) => {
+      state.settings.enable360 = e.target.checked;
+      persist();
+      showToast(state.settings.enable360 ? '360° product viewer enabled' : '360° product viewer disabled and hidden on product page');
+      renderActiveTab();
     });
   }
 

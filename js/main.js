@@ -454,6 +454,7 @@
     }
 
     var viewBtns = $$('[data-views] .view-btn');
+    var btn360 = $('[data-view-360]');
     var stills = $$('[data-still]', stage);
     var spins = $$('[data-spin]', stage);
     var degTag = $('[data-deg-tag]');
@@ -463,22 +464,50 @@
     var view = 0;
     var angle = 0;
 
+    // Check if 360 viewer is enabled from Admin settings (Disabled by default)
+    var is360GlobalEnabled = false;
+    try {
+      var savedSettings = JSON.parse(localStorage.getItem('rri_admin_settings'));
+      if (savedSettings && savedSettings.enable360 === true) {
+        is360GlobalEnabled = true;
+      } else if (localStorage.getItem('rri_enable_360') === 'true') {
+        is360GlobalEnabled = true;
+      }
+    } catch (e) {}
+
+    if (btn360) {
+      if (is360GlobalEnabled) {
+        btn360.hidden = false;
+        btn360.style.display = '';
+      } else {
+        btn360.hidden = true;
+        btn360.style.display = 'none';
+      }
+    }
+
     var renderStage = function () {
-      var is360 = view === 4;
+      var is360 = is360GlobalEnabled && view === 4;
       viewBtns.forEach(function (b, i) { b.classList.toggle('on', i === view); });
       stills.forEach(function (f, i) { f.classList.toggle('on', !is360 && i === view); });
       spins.forEach(function (f, i) { f.classList.toggle('on', is360 && i === angle); });
-      degTag.hidden = !is360;
-      spinCtl.hidden = !is360;
-      deg.textContent = angle * 45;
-      range.value = angle;
+      if (degTag) degTag.hidden = !is360;
+      if (spinCtl) spinCtl.hidden = !is360;
+      if (deg) deg.textContent = angle * 45;
+      if (range) range.value = angle;
     };
     viewBtns.forEach(function (b, i) {
-      b.addEventListener('click', function () { view = i; angle = 0; renderStage(); });
+      b.addEventListener('click', function () {
+        if (i === 4 && !is360GlobalEnabled) return;
+        view = i;
+        angle = 0;
+        renderStage();
+      });
     });
-    range.addEventListener('input', function () { angle = +range.value; renderStage(); });
-    $('[data-angle-prev]').addEventListener('click', function () { angle = (angle + 7) % 8; renderStage(); });
-    $('[data-angle-next]').addEventListener('click', function () { angle = (angle + 1) % 8; renderStage(); });
+    if (range) range.addEventListener('input', function () { angle = +range.value; renderStage(); });
+    var anglePrev = $('[data-angle-prev]');
+    if (anglePrev) anglePrev.addEventListener('click', function () { angle = (angle + 7) % 8; renderStage(); });
+    var angleNext = $('[data-angle-next]');
+    if (angleNext) angleNext.addEventListener('click', function () { angle = (angle + 1) % 8; renderStage(); });
 
     // Availability
     var notes = {
