@@ -488,8 +488,10 @@ button.play[hidden] { display: none; }
 .form-title { text-align: center; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--oxblood); }
 .field { display: grid; gap: 4px; }
 .field > span { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
-.field input, .field select { border: 0; border-bottom: 1px solid rgba(31, 23, 20, .4); border-radius: 0; background: transparent; padding: 8px 0; font-size: 19px; outline: none; width: 100%; min-width: 0; }
-.field input:focus, .field select:focus { border-bottom-color: var(--oxblood); }
+.field input, .field select, .field textarea { border: 0; border-bottom: 1px solid rgba(31, 23, 20, .4); border-radius: 0; background: transparent; padding: 8px 0; font-family: var(--serif); font-size: 19px; outline: none; width: 100%; min-width: 0; transition: border-color .2s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--oxblood); }
+.field textarea { font-family: var(--serif-body); font-size: 17px; line-height: 1.5; resize: vertical; min-height: 52px; }
+.field textarea::placeholder { font-style: italic; color: var(--muted); opacity: 0.85; font-size: 15px; }
 .phone { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; }
 .btn-submit { margin-top: 8px; border: 0; background: var(--oxblood); color: var(--cream); padding: 18px; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; cursor: pointer; transition: background .2s; }
 .btn-submit:hover { background: var(--ink); }

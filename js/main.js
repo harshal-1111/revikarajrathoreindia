@@ -313,6 +313,7 @@
       var panel = form.closest('[data-form-panel]');
       
       var formData = new FormData(form);
+      var notes = formData.get('notes') ? formData.get('notes').trim() : '';
       var consultItem = {
         id: 'CON-' + Math.floor(100 + Math.random() * 900),
         name: formData.get('name') || 'Client',
@@ -321,7 +322,8 @@
         date: formData.get('date') || 'Upcoming',
         time: formData.get('time') || '03:00 PM',
         type: 'Studio Visit',
-        occasion: 'Bespoke Couture Consultation',
+        occasion: notes || 'Bespoke Couture Consultation',
+        notes: notes,
         status: 'pending'
       };
       
@@ -331,9 +333,28 @@
         localStorage.setItem('rri_admin_consultations', JSON.stringify(existing));
       } catch (err) {}
 
+      if (form.hasAttribute('data-counts-enquiry')) {
+        var prodTitleEl = $('#modal-product-title');
+        var garment = prodTitleEl ? prodTitleEl.textContent.trim() : 'Bespoke Atelier Piece';
+        var enqItem = {
+          id: 'ENQ-' + Math.floor(100 + Math.random() * 900),
+          name: formData.get('name') || 'Client',
+          phone: (formData.get('code') || '') + ' ' + (formData.get('phone') || ''),
+          garment: garment,
+          notes: notes || 'Product enquiry submitted via PDP appointment modal.',
+          date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+          status: 'New Lead'
+        };
+        try {
+          var enqExisting = JSON.parse(localStorage.getItem('rri_admin_enquiries')) || [];
+          enqExisting.unshift(enqItem);
+          localStorage.setItem('rri_admin_enquiries', JSON.stringify(enqExisting));
+        } catch (err) {}
+        writeCount(readCount() + 1);
+      }
+
       form.hidden = true;
       $('[data-thanks]', panel).hidden = false;
-      if (form.hasAttribute('data-counts-enquiry')) writeCount(readCount() + 1);
     });
   });
 
