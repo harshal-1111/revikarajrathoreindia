@@ -306,7 +306,7 @@ button.play[hidden] { display: none; }
 .hero-bg { position: absolute; left: 0; right: 0; top: 0; bottom: 140px; background: var(--ink-deep); }
 .hero-scallop { position: absolute; left: 0; right: 0; bottom: 130px; height: 10px; background: radial-gradient(circle at 50% 0, var(--ink-deep) 9px, transparent 9.5px) 0 0 / 18px 10px repeat-x; }
 .hero-grid { position: relative; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px) minmax(0, 1fr); gap: clamp(16px, 3vw, 48px); align-items: start; }
-.hero-side { overflow: hidden; border-radius: 999px 999px 0 0; background: var(--ink-warm); color: var(--gold); }
+.hero-side { overflow: hidden; border-radius: 0; background: var(--ink-warm); color: var(--gold); border: 1px solid rgba(201, 168, 106, .4); box-shadow: 0 20px 45px -15px rgba(0, 0, 0, .6); }
 .hero-left { padding-top: 90px; display: flex; justify-content: flex-end; }
 .hero-left .hero-side { width: min(100%, 300px); aspect-ratio: 3 / 4.4; }
 .hero-right { padding-top: 160px; }
@@ -315,7 +315,7 @@ button.play[hidden] { display: none; }
 .hero-plate .eyebrow { color: var(--gold); letter-spacing: .3em; margin-top: 10px; }
 .hero-plate h1 { margin: 6px 0 0; font-family: var(--serif-display); font-style: italic; font-size: clamp(56px, 7vw, 92px); line-height: 1; letter-spacing: -.01em; }
 .hero-plate .sub { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; margin: 14px 0 22px; }
-.hero-plate .arch { width: 100%; aspect-ratio: 3 / 3.6; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--oxblood-deep); color: var(--gold); }
+.hero-plate .arch { width: 100%; aspect-ratio: 3 / 3.6; border-radius: 0; overflow: hidden; background: var(--oxblood-deep); color: var(--gold); border: 1px solid rgba(201, 168, 106, .45); }
 .hero-plate .cta { margin-top: 22px; color: var(--cream); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 4px; }
 .hero-plate .cta:hover { color: var(--gold); }
 .hero-plate .year { margin-top: 18px; display: flex; align-items: center; gap: 10px; color: var(--gold); }
@@ -387,7 +387,7 @@ button.play[hidden] { display: none; }
 /* ---------- Homepage: category index ---------- */
 .index-sec { position: relative; background: var(--cream-2); border-top: var(--rule-soft); border-bottom: var(--rule-soft); }
 .split { padding-top: clamp(64px, 8vw, 110px); padding-bottom: clamp(64px, 8vw, 110px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(40px, 6vw, 96px); align-items: center; }
-.cat-preview { position: relative; aspect-ratio: 4 / 5; max-height: 720px; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--cream-6); color: var(--muted); outline: 1px solid var(--brass); outline-offset: 10px; }
+.cat-preview { position: relative; aspect-ratio: 4 / 5; max-height: 720px; border-radius: 0; overflow: hidden; background: var(--cream-6); color: var(--muted); outline: 1px solid var(--brass); outline-offset: 10px; }
 .cat-preview > div { position: absolute; inset: 0; transition: opacity .5s ease; opacity: 0; pointer-events: none; }
 .cat-preview > div.on { opacity: 1; pointer-events: auto; }
 .index-sec h2 { margin: 8px 0 36px; font-family: var(--serif-display); font-size: clamp(34px, 4vw, 54px); line-height: 1.05; }
@@ -504,7 +504,7 @@ button.play[hidden] { display: none; }
 .view-btn .l { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
 .view-btn.on { border-left-color: var(--oxblood); color: var(--oxblood); }
 .stage-frame { padding: 14px; border: 1px solid rgba(176, 141, 87, .8); background: var(--cream-4); }
-.stage { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--cream-5); color: var(--muted); }
+.stage { position: relative; aspect-ratio: 4 / 5; border-radius: 0; overflow: hidden; background: var(--cream-5); color: var(--muted); }
 .stage > .frame { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .45s; }
 .stage > .frame.spin { transition: opacity 0s; }
 .stage > .frame.on { opacity: 1; pointer-events: auto; }
