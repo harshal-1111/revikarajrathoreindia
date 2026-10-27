@@ -425,8 +425,8 @@ button.play[hidden] { display: none; }
 
 /* ---------- Collections ---------- */
 .collections { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
-.coll { position: relative; display: flex; flex-direction: column; min-height: 640px; padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) clamp(28px, 4vw, 56px); overflow: hidden; }
-.coll-img { position: relative; flex: 1 1 auto; min-height: clamp(260px, 30vw, 420px); }
+.coll { position: relative; display: flex; flex-direction: column; min-height: 580px; padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) clamp(28px, 4vw, 56px); overflow: hidden; }
+.coll-img { position: relative; width: 100%; aspect-ratio: 16 / 9; flex: 0 0 auto; }
 .coll-body { position: relative; margin-top: clamp(24px, 3vw, 36px); padding: 0 clamp(8px, 1vw, 16px); }
 .coll-body .eyebrow { color: inherit; }
 .coll-title { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
