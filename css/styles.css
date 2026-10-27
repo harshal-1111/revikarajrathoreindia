@@ -231,11 +231,51 @@ body[data-page="home"] .site-header.has-mega-open .header-util-bar {
 .film-hero-title { display: flex; flex-direction: column; gap: 4px; }
 .film-hero-title .eyebrow { color: var(--gold); letter-spacing: .3em; }
 .film-hero-title .name { font-family: var(--serif-display); font-style: italic; font-size: clamp(44px, 6vw, 84px); line-height: 1; }
-.film-hero-cta { align-self: flex-start; margin-top: 18px; padding: 14px 26px; background: var(--gold); border: 1px solid var(--gold); color: var(--ink-deep); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; transition: background .3s, color .3s; }
-.film-hero-cta:hover { background: transparent; color: var(--cream); }
+.film-hero-cta {
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 15px 32px;
+  background: var(--oxblood);
+  background: linear-gradient(135deg, #6c0002 0%, #590001 55%, #460001 100%);
+  border: 1px solid var(--gold);
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.55), 0 0 16px rgba(89, 0, 1, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.film-hero-cta::after {
+  content: "→";
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--gold);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.film-hero-cta:hover {
+  background: #760002;
+  background: linear-gradient(135deg, #850003 0%, #6e0002 55%, #590001 100%);
+  border-color: #E2CD9D;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 30px rgba(89, 0, 1, 0.7), 0 0 20px rgba(201, 168, 106, 0.4);
+  transform: translateY(-2px);
+}
+.film-hero-cta:hover::after {
+  transform: translateX(4px);
+  color: #FFFFFF;
+}
 .film-hero-ctl { display: flex; gap: 10px; }
-.film-hero-ctl button { min-width: 110px; padding: 11px 16px; border: 1px solid rgba(201, 168, 106, .7); background: rgba(22, 16, 14, .35); color: var(--cream); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s; }
-.film-hero-ctl button:hover { background: var(--gold); color: var(--ink-deep); }
+.film-hero-ctl button { min-width: 110px; padding: 11px 16px; border: 1px solid rgba(201, 168, 106, .7); background: rgba(22, 16, 14, .35); color: var(--cream); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
+.film-hero-ctl button:hover { background: var(--oxblood); border-color: var(--gold); color: #FFFFFF; }
 .film-hero-scroll { position: absolute; left: 50%; bottom: clamp(24px, 4vw, 44px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--cream); font-size: 10px; letter-spacing: .3em; padding-left: .3em; text-transform: uppercase; }
 .film-hero-scroll:hover { color: var(--gold); }
 .film-hero-scroll i { width: 1px; height: 42px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scroll-cue 2.2s ease-in-out infinite; transform-origin: top; }
@@ -247,6 +287,7 @@ body[data-page="home"] .site-header.has-mega-open .header-util-bar {
 @media (max-width: 720px) {
   .film-hero { height: 100svh; min-height: 480px; }
   .film-hero-bar { flex-direction: column; align-items: flex-start; padding-bottom: 28px; }
+  .film-hero-cta { padding: 13px 24px; font-size: 11px; margin-top: 14px; }
   .film-hero-ctl button { min-width: 0; padding: 10px 14px; }
   .film-hero-scroll { display: none; }
 }
