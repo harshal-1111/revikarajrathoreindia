@@ -22,6 +22,7 @@
   function setMenu(key) {
     openMenu = key;
     megas.forEach(function (m) { m.hidden = m.dataset.mega !== key; });
+    if (header) header.classList.toggle('has-mega-open', !!key);
   }
   $$('[data-menu]').forEach(function (a) {
     a.addEventListener('mouseenter', function () { setMenu(a.dataset.menu); });
@@ -145,6 +146,110 @@
   /* ---------- Product page ---------- */
   var stage = $('[data-stage]');
   if (stage) {
+    var catalog = window.RRI_CATALOG;
+    var params = new URLSearchParams(location.search);
+    var pid = params.get('id');
+    var piece = catalog ? catalog.getPieceById(pid) : null;
+
+    if (piece) {
+      // 1. Update Document Title
+      document.title = piece.name + ' — Revikaraj Rathore India';
+
+      // 2. Update Breadcrumbs
+      var crumbCat = $('#pdp-crumb-cat');
+      if (crumbCat) {
+        crumbCat.textContent = piece.primaryCategory || 'Handwork Sarees';
+        crumbCat.href = 'shop.html?category=' + (piece.primaryCategorySlug || 'handwork-sarees');
+      }
+      var crumbProd = $('#pdp-crumb-prod');
+      if (crumbProd) crumbProd.textContent = piece.name;
+
+      // 3. Update Meta & Title
+      var pdpCollection = $('#pdp-collection');
+      if (pdpCollection) pdpCollection.textContent = piece.primaryCollection || 'Collection 2026';
+      var pdpPlate = $('#pdp-plate');
+      if (pdpPlate) pdpPlate.textContent = 'Plate ' + (piece.plate || '01');
+      var pdpTitle = $('#pdp-title');
+      if (pdpTitle) pdpTitle.textContent = piece.name;
+      var pdpDesc = $('#pdp-desc');
+      if (pdpDesc) pdpDesc.textContent = piece.desc;
+      var pdpCode = $('#pdp-code');
+      if (pdpCode) pdpCode.textContent = piece.code;
+
+      // 4. Update Details Accordion
+      var pdpComp = $('#pdp-components');
+      if (pdpComp) pdpComp.textContent = piece.components || '2 — Saree with unstitched blouse piece';
+      var pdpColour = $('#pdp-colour');
+      if (pdpColour) pdpColour.textContent = piece.colour;
+      var pdpFabric = $('#pdp-fabric');
+      if (pdpFabric) pdpFabric.textContent = piece.fabric;
+      var pdpCare = $('#pdp-care');
+      if (pdpCare) pdpCare.textContent = piece.care || 'Dry clean only. Store folded in muslin.';
+
+      // 5. Update Gallery Frames (Front, Drape, Pallu, Blouse)
+      var stillFrames = $$('[data-still]', stage);
+      if (piece.stills && piece.stills.length) {
+        piece.stills.forEach(function (src, idx) {
+          if (stillFrames[idx]) {
+            var img = $('img', stillFrames[idx]);
+            if (img) {
+              img.src = src;
+              img.alt = piece.name + ' — ' + (['front view', 'drape view', 'pallu detail', 'blouse & craft detail'][idx] || 'detail');
+            }
+          }
+        });
+      } else if (piece.img) {
+        var mainImgSrc = (piece.img.startsWith('data:') || piece.img.startsWith('assets/') || piece.img.startsWith('http'))
+          ? piece.img
+          : ('assets/images/' + piece.img);
+        if (stillFrames[0]) {
+          var img = $('img', stillFrames[0]);
+          if (img) { img.src = mainImgSrc; img.alt = piece.name; }
+        }
+      }
+
+      // 6. Update Availability Buttons
+      var availBtns = $$('[data-avail-opt]');
+      var isMTO = piece.avail === 'Made to Order';
+      availBtns.forEach(function (btn) {
+        var opt = btn.dataset.availOpt;
+        var on = (isMTO && opt === 'mto') || (!isMTO && opt === 'rts');
+        btn.classList.toggle('on', on);
+      });
+      var availNote = $('[data-avail-note]');
+      if (availNote) {
+        availNote.textContent = isMTO
+          ? 'Crafted for you after a consultation, with colour and blouse adjusted to your measure.'
+          : 'Finished and held in the studio. Dispatched once your enquiry is confirmed.';
+      }
+
+      // 7. Update Enquiry Modal
+      var modalTitle = $('#modal-product-title');
+      if (modalTitle) modalTitle.textContent = piece.name;
+      var modalSub = $('#modal-product-sub');
+      if (modalSub) {
+        modalSub.innerHTML = piece.code + ' · Free Size · <span data-avail-label>' + piece.avail + '</span>';
+      }
+
+      // 8. Render Dynamic "You May Also Admire" Related Cards
+      var relatedGrid = $('#pdp-related-grid');
+      if (relatedGrid && catalog) {
+        var allPieces = catalog.getAllPieces();
+        var others = allPieces.filter(function (p) { return p.id !== piece.id; }).slice(0, 4);
+        relatedGrid.innerHTML = others.map(function (o, idx) {
+          var oImg = (o.img.startsWith('data:') || o.img.startsWith('assets/') || o.img.startsWith('http'))
+            ? o.img
+            : ('assets/images/' + o.img);
+          return '<a href="product.html?id=' + encodeURIComponent(o.id) + '" class="card">' +
+            '<div class="card-meta"><span>Plate ' + (o.plate || String(idx + 1).padStart(2, '0')) + '</span><span>' + o.avail + '</span></div>' +
+            '<div class="card-frame"><div><div class="slot"><img src="' + oImg + '" alt="' + (o.alt || o.name) + '" loading="lazy"></div></div></div>' +
+            '<div class="card-name">' + o.name + '</div>' +
+            '<div class="price-note">' + (o.priceNote || 'Price available on request') + '</div>' +
+            '</a>';
+        }).join('');
+      }
+    }
+
     var viewBtns = $$('[data-views] .view-btn');
     var stills = $$('[data-still]', stage);
     var spins = $$('[data-spin]', stage);

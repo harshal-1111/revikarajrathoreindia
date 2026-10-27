@@ -5,9 +5,9 @@
 }
 
 :root {
-  --maroon: #56141d;
-  --maroon-light: #64202a;
-  --maroon-dark: #3a0b12;
+  --maroon: #590001;
+  --maroon-light: #6a0001;
+  --maroon-dark: #3f0001;
   --cream: #f3e2c9;
   --gold: #d9b98c;
   --gold-deep: #b8875a;
@@ -43,7 +43,7 @@ body {
   z-index: 3;
   padding: 26px 16px 22px;
   text-align: center;
-  background: #57141D; /* matches the logo's own background */
+  background: #590001;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -345,7 +345,7 @@ body {
   z-index: 3;
   padding: 40px 16px 30px;
   text-align: center;
-  background: linear-gradient(to bottom, #48101a, var(--maroon-dark));
+  background: #590001;
 }
 
 /* Gold line with ornament on top of the footer */
@@ -384,7 +384,7 @@ body {
   height: 30px;
   border: 1px solid var(--gold-line);
   border-radius: 50%;
-  background: #48101a;
+  background: #590001;
 }
 
 .footer-brand {
