@@ -92,6 +92,33 @@
 
   search.addEventListener('input', render);
 
+  // Grid layout toggle (3 columns default / 4 columns compact)
+  var gridToggleBtns = $$('[data-grid-cols]');
+  function applyGridCols(cols) {
+    if (!grid) return;
+    grid.classList.remove('cols-3', 'cols-4');
+    grid.classList.add('cols-' + cols);
+    gridToggleBtns.forEach(function (btn) {
+      var active = btn.getAttribute('data-grid-cols') === String(cols);
+      btn.classList.toggle('on', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    try { localStorage.setItem('rri_shop_grid_cols', String(cols)); } catch (e) {}
+  }
+  var savedCols = '3';
+  try {
+    var stored = localStorage.getItem('rri_shop_grid_cols');
+    if (stored === '3' || stored === '4') savedCols = stored;
+  } catch (e) {}
+  applyGridCols(savedCols);
+
+  gridToggleBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var cols = btn.getAttribute('data-grid-cols') || '3';
+      applyGridCols(cols);
+    });
+  });
+
   // Phones: filters live in a full-screen sheet
   var openBtn = $('[data-filter-open]');
   function setSheet(open) {
