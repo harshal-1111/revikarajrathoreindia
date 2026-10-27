@@ -302,9 +302,9 @@ button.play:hover div { background: var(--oxblood); border-color: var(--gold); }
 button.play[hidden] { display: none; }
 
 /* ---------- Homepage: hero ---------- */
-.hero { position: relative; padding: 48px var(--gutter) 0; }
-.hero-bg { position: absolute; left: 0; right: 0; top: 0; bottom: 140px; background: var(--ink-deep); }
-.hero-scallop { position: absolute; left: 0; right: 0; bottom: 130px; height: 10px; background: radial-gradient(circle at 50% 0, var(--ink-deep) 9px, transparent 9.5px) 0 0 / 18px 10px repeat-x; }
+.hero { position: relative; padding: 48px var(--gutter) clamp(64px, 8vw, 100px); }
+.hero-bg { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: var(--ink-deep); }
+.hero-scallop { position: absolute; left: 0; right: 0; bottom: -10px; height: 10px; z-index: 2; background: radial-gradient(circle at 50% 0, var(--ink-deep) 9px, transparent 9.5px) 0 0 / 18px 10px repeat-x; }
 .hero-grid { position: relative; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px) minmax(0, 1fr); gap: clamp(16px, 3vw, 48px); align-items: start; }
 .hero-side { overflow: hidden; border-radius: 0; background: var(--ink-warm); color: var(--gold); border: 1px solid rgba(201, 168, 106, .4); box-shadow: 0 20px 45px -15px rgba(0, 0, 0, .6); }
 .hero-left { padding-top: 90px; display: flex; justify-content: flex-end; }
@@ -325,7 +325,7 @@ button.play[hidden] { display: none; }
 @media (max-width: 720px) {
   .hero-grid { grid-template-columns: minmax(0, 1fr); }
   /* Phones: a swipeable carousel — the plate sits centred with ~20% of each side card peeking in */
-  .hero { padding-left: 0; padding-right: 0; }
+  .hero { padding-left: 0; padding-right: 0; padding-bottom: 56px; }
   .hero-grid { display: flex; align-items: center; gap: 3vw; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 21vw; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .hero-grid::-webkit-scrollbar { display: none; }
   .hero-grid > * { flex: 0 0 58vw; scroll-snap-align: center; }
@@ -340,24 +340,18 @@ button.play[hidden] { display: none; }
 }
 
 /* ---------- Homepage: story ---------- */
-.story { position: relative; overflow-x: clip; max-width: 1240px; margin: 0 auto; padding: clamp(80px, 10vw, 140px) var(--gutter) clamp(80px, 9vw, 120px); text-align: center; }
+.story { position: relative; overflow-x: clip; max-width: 1240px; margin: 0 auto; padding: clamp(70px, 8vw, 120px) var(--gutter) clamp(70px, 8vw, 110px); text-align: center; }
 
 /* Decorative background illustrations: sit behind section content (isolation + z-index:-1)
    and multiply into the cream paper so their light fills disappear and only the ink remains. */
 .deco { position: absolute; z-index: -1; height: auto; mix-blend-mode: multiply; pointer-events: none; user-select: none; }
-/* Story illustrations either side of the hero plate / heading, staggered (right sits lower).
-   Left starts 20px below the hero's scallop edge (130px above the hero's bottom) and is sized to
-   the space beside the hero plate (max 460px wide, centred): 50vw - 230px less margins.
-   Right sits beside the heading, whose text reaches about 50vw + 330px, so it is sized to the
-   space right of that and capped so it ends above the founders paragraph below. */
 .story-wrap { position: relative; }
 .story-deco { position: absolute; pointer-events: none; user-select: none; }
 .story-deco img { display: block; width: 100%; height: auto; }
-.story-deco--left { left: 1.5vw; top: -110px; width: min(calc((48.5vw - 270px) * .85), 450px); }
-.story-deco--right { right: .75vw; top: clamp(90px, 9vw, 140px); width: min(calc(49.25vw - 345px), 540px); }
+.story-deco--left { left: 1.5vw; top: clamp(10px, 3vw, 40px); width: min(calc((48.5vw - 270px) * .85), 450px); }
+.story-deco--right { right: .75vw; top: clamp(60px, 7vw, 110px); width: min(calc(49.25vw - 345px), 540px); }
 @media (max-width: 1300px) {
-  /* Too little room beside the heading: keep the right one up in the band, still lower than the left. */
-  .story-deco--right { top: -40px; width: calc(49.25vw - 270px); }
+  .story-deco--right { top: clamp(20px, 3vw, 50px); width: calc(49.25vw - 270px); }
 }
 .edit-sec { position: relative; isolation: isolate; overflow: hidden; background: var(--cream); }
 .deco-edit { left: 0; top: 50%; width: clamp(180px, 18vw, 320px); transform: translate(-35%, -45%); opacity: .3; }
