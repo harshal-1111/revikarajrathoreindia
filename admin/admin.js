@@ -116,7 +116,9 @@
       colour: 'Orange Rust',
       category: 'Handwork Sarees',
       collection: 'Nazar Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Pure silk; zardozi & dabka handwork',
+      desc: 'A pure silk saree in deep oxblood and rust, its border worked in zardozi and dabka with a scattered nazar motif across the drape. Paired with an unstitched blouse piece in matching silk.'
     },
     {
       id: 'PROD-02',
@@ -126,7 +128,9 @@
       colour: 'Blush Pink',
       category: 'Handwork Sarees',
       collection: 'Nazar Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Handloom organza silk with tonal sequin embroidery',
+      desc: 'A whisper-weight blush pink organza saree adorned with handcrafted micro-sequin florals, finished with a scalloped border and companion tissue blouse piece.'
     },
     {
       id: 'PROD-03',
@@ -136,7 +140,9 @@
       colour: 'Pink',
       category: 'Sarees',
       collection: 'Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Raw silk with resham embroidery & moti drops',
+      desc: 'Sculpted in rich berry pink silk, detailed with botanical floral clusters rendered in delicate resham needles and freshwater pearl moti along the pallu border.'
     },
     {
       id: 'PROD-04',
@@ -146,7 +152,9 @@
       colour: 'Lilac Purple',
       category: 'Handwork Sarees',
       collection: 'Nazar Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Chanderi tissue silk with zardozi borders',
+      desc: 'An ethereal lilac chanderi tissue ensemble shimmering under ambient light, woven with royal Rajasthani floral jaal and antique zari work.'
     },
     {
       id: 'PROD-05',
@@ -156,7 +164,9 @@
       colour: 'Black',
       category: 'Handwork Sarees',
       collection: 'Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Mulberry satin silk with tonal handwork',
+      desc: 'A dramatic midnight black evening drape featuring raised bullion work and matte crystals reflecting quiet, understated opulence across the fluid drape.'
     },
     {
       id: 'PROD-06',
@@ -166,7 +176,9 @@
       colour: 'Lime Green',
       category: 'Printed Sarees',
       collection: 'Chaap',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Handblock-printed mulmul silk with gota patti',
+      desc: 'From the Chaap series, master woodcut block print across vibrant lime green mulmul silk, trimmed with delicate marodi and beaten gota accents on the hemlines.'
     },
     {
       id: 'PROD-07',
@@ -176,7 +188,9 @@
       colour: 'Pink Red',
       category: 'Handwork Sarees',
       collection: 'Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Pure georgette with aari taari handwork',
+      desc: 'A radiant confluence of vermilion and rose pink in fluid georgette, richly worked with heirloom aari embroidery inspired by Mewari frescoes and heritage palaces.'
     },
     {
       id: 'PROD-08',
@@ -186,7 +200,9 @@
       colour: 'Ivory Gold',
       category: 'Sarees',
       collection: 'Nazar Collection 2026',
-      priceMode: 'Price on Request'
+      priceMode: 'Price on Request',
+      fabric: 'Katan silk with dense karchobi borders',
+      desc: 'An archival ivory katan silk saree distinguished by dense karchobi borders and geometric pallu finery, celebrating classical Indian handcraft and royal minimalism.'
     }
   ];
 
@@ -779,6 +795,10 @@
                 <div class="product-meta-row">
                   <span class="product-price">${p.priceMode}</span>
                   <div class="action-strip">
+                    <button class="btn-sm edit" data-edit-prod="${p.id}" title="Modify Garment Details & Photograph">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                      Edit
+                    </button>
                     <button class="btn-sm" data-toggle-avail="${p.id}" title="Toggle Availability">${p.avail === 'Ready to Ship' ? 'Set MTO' : 'Set RTS'}</button>
                     <button class="btn-sm delete" data-delete-prod="${p.id}" title="Delete Piece">×</button>
                   </div>
@@ -792,7 +812,15 @@
   }
 
   function attachProductsEvents() {
-    $('#btn-add-product')?.addEventListener('click', openProductModal);
+    $('#btn-add-product')?.addEventListener('click', () => openProductModal(null));
+
+    $$('[data-edit-prod]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.editProd;
+        const prod = state.products.find(p => p.id === id);
+        if (prod) openProductModal(prod);
+      });
+    });
 
     $$('[data-toggle-avail]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1015,18 +1043,64 @@
     if (modal) modal.hidden = true;
   }
 
-  function openProductModal() {
+  function openProductModal(prod) {
     const modal = $('#modal-product');
-    if (modal) {
+    if (!modal) return;
+    const form = $('#form-add-product');
+    const titleEl = $('#modal-product-title');
+    const submitBtn = $('#btn-submit-product');
+    const editIdInput = $('#prod-edit-id');
+
+    resetProductUpload();
+
+    if (prod && typeof prod === 'object' && prod.id) {
+      // EDIT MODE
+      if (titleEl) titleEl.textContent = 'Edit Garment: ' + (prod.name || prod.id);
+      if (submitBtn) submitBtn.textContent = 'Save Changes';
+      if (editIdInput) editIdInput.value = prod.id;
+
+      if (form) {
+        if (form.prod_name) form.prod_name.value = prod.name || '';
+        if (form.prod_category) form.prod_category.value = prod.category || 'Handwork Sarees';
+        if (form.prod_collection) form.prod_collection.value = prod.collection || 'Collection 2026';
+        if (form.prod_avail) form.prod_avail.value = prod.avail || 'Made to Order';
+        if (form.prod_colour) form.prod_colour.value = prod.colour || '';
+        if (form.prod_price) form.prod_price.value = prod.priceMode || 'Price on Request';
+        if (form.prod_fabric) form.prod_fabric.value = prod.fabric || '';
+        if (form.prod_desc) form.prod_desc.value = prod.desc || '';
+      }
+
+      if (prod.img) {
+        const previewImg = $('#preview-img');
+        const dataInput = $('#prod-img-data');
+        const previewWrap = $('#upload-preview');
+        const promptWrap = $('#upload-prompt');
+        const infoText = $('#upload-file-info');
+
+        if (previewImg) previewImg.src = prod.img;
+        if (dataInput) dataInput.value = prod.img;
+        if (infoText) infoText.textContent = 'Current Photograph (Click change to replace)';
+        if (promptWrap) promptWrap.hidden = true;
+        if (previewWrap) previewWrap.hidden = false;
+      }
+    } else {
+      // ADD NEW MODE
+      if (titleEl) titleEl.textContent = 'Add Garment to Lookbook';
+      if (submitBtn) submitBtn.textContent = 'Add to Lookbook';
+      if (editIdInput) editIdInput.value = '';
+      if (form) form.reset();
       resetProductUpload();
-      modal.hidden = false;
     }
+
+    modal.hidden = false;
   }
 
   function closeProductModal() {
     const modal = $('#modal-product');
     if (modal) {
       modal.hidden = true;
+      const form = $('#form-add-product');
+      if (form) form.reset();
       resetProductUpload();
     }
   }
@@ -1187,15 +1261,40 @@
       showToast('New appointment scheduled successfully');
     });
 
-    // Form: Add Product
+    // Form: Add or Edit Product
     $('#form-add-product')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.target;
+      const editId = $('#prod-edit-id')?.value;
       const imgVal = form.prod_img.value.trim();
       if (!imgVal) {
         showToast('Please upload a garment photograph');
         return;
       }
+
+      if (editId) {
+        // Edit existing product
+        const existing = state.products.find(p => p.id === editId);
+        if (existing) {
+          existing.name = form.prod_name.value.trim();
+          existing.img = imgVal;
+          existing.avail = form.prod_avail.value;
+          existing.colour = form.prod_colour.value.trim() || 'Bespoke';
+          existing.category = form.prod_category.value;
+          existing.collection = form.prod_collection.value;
+          existing.priceMode = form.prod_price.value.trim() || 'Price on Request';
+          existing.fabric = form.prod_fabric ? form.prod_fabric.value.trim() : (existing.fabric || '');
+          existing.desc = form.prod_desc ? form.prod_desc.value.trim() : (existing.desc || '');
+
+          persist();
+          closeProductModal();
+          renderActiveTab();
+          showToast(`Saved modifications to ${existing.name}`);
+          return;
+        }
+      }
+
+      // Add New Product
       const newProd = {
         id: 'PROD-' + String(state.products.length + 1).padStart(2, '0'),
         name: form.prod_name.value.trim(),
@@ -1204,14 +1303,14 @@
         colour: form.prod_colour.value.trim() || 'Bespoke',
         category: form.prod_category.value,
         collection: form.prod_collection.value,
-        priceMode: form.prod_price.value.trim() || 'Price on Request'
+        priceMode: form.prod_price.value.trim() || 'Price on Request',
+        fabric: form.prod_fabric ? form.prod_fabric.value.trim() : '',
+        desc: form.prod_desc ? form.prod_desc.value.trim() : ''
       };
       state.products.unshift(newProd);
       persist();
       updateBadges();
       closeProductModal();
-      form.reset();
-      resetProductUpload();
       renderActiveTab();
       showToast(`Added ${newProd.name} to lookbook`);
     });

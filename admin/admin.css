@@ -755,6 +755,19 @@ button, input, select, textarea {
   border-color: #25D366;
 }
 
+.btn-sm.edit {
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+  background: rgba(201, 168, 106, 0.08);
+}
+
+.btn-sm.edit:hover {
+  border-color: var(--gold);
+  color: #fff;
+  background: var(--maroon);
+  box-shadow: 0 2px 8px var(--maroon-glow);
+}
+
 .btn-sm.delete:hover {
   border-color: #ff6b6b;
   color: #ff6b6b;

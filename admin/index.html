@@ -224,10 +224,11 @@
   <div class="modal-overlay" id="modal-product" hidden>
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Add Garment to Lookbook</h3>
+        <h3 class="modal-title" id="modal-product-title">Add Garment to Lookbook</h3>
         <button type="button" class="modal-close-btn" data-close-modal>&times;</button>
       </div>
       <form id="form-add-product" style="display:grid; gap:16px;">
+        <input type="hidden" name="prod_id" id="prod-edit-id" value="">
         <div class="modal-grid-2">
           <div class="form-group">
             <label>Garment Name</label>
@@ -280,6 +281,16 @@
         </div>
 
         <div class="form-group">
+          <label>Fabric & Handwork Craft Details</label>
+          <input type="text" name="prod_fabric" class="form-input" placeholder="e.g. Pure silk; zardozi & dabka handwork">
+        </div>
+
+        <div class="form-group">
+          <label>Lookbook & Product Description</label>
+          <textarea name="prod_desc" class="form-input" rows="2" placeholder="e.g. A pure silk saree in deep oxblood, its border worked in zardozi and dabka with a scattered nazar motif across the drape."></textarea>
+        </div>
+
+        <div class="form-group">
           <label>Garment Photograph (Upload File)</label>
           <div class="upload-dropzone" id="upload-dropzone">
             <input type="file" id="prod-file-input" accept="image/png, image/jpeg, image/webp, image/jpg" style="display:none;">
@@ -305,7 +316,7 @@
 
         <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
           <button type="button" class="btn-sm" data-close-modal>Cancel</button>
-          <button type="submit" class="btn-primary">Add to Lookbook</button>
+          <button type="submit" class="btn-primary" id="btn-submit-product">Add to Lookbook</button>
         </div>
       </form>
     </div>

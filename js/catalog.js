@@ -226,56 +226,96 @@
   ];
 
   /**
-   * Reads extra products added through the admin panel
+   * Returns all catalog pieces, merging any admin edits or newly added garments from localStorage
    */
-  function getAdminPieces() {
+  function getAllPieces() {
     try {
       var raw = localStorage.getItem('rri_admin_products');
-      if (!raw) return [];
-      var parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return [];
+      if (!raw) return BASE_PIECES.slice();
+      var adminList = JSON.parse(raw);
+      if (!Array.isArray(adminList) || !adminList.length) return BASE_PIECES.slice();
 
-      return parsed.filter(function (p) {
-        // filter out seed items that match initial BASE_PIECES by name
-        return !BASE_PIECES.some(function (b) {
-          return b.name.toLowerCase() === (p.name || '').toLowerCase();
+      var result = [];
+      var matchedAdminIds = {};
+
+      BASE_PIECES.forEach(function (base, idx) {
+        var prodId = 'PROD-' + String(idx + 1).padStart(2, '0');
+        var match = adminList.find(function (a) {
+          return a.id === prodId || slugify(a.name) === base.id;
         });
-      }).map(function (p, idx) {
-        var slug = slugify(p.name || ('piece-' + (idx + 1)));
-        var catSlug = slugify(p.category || 'sarees');
-        var colSlug = slugify(p.collection || 'collection-2026');
-        var imgUrl = p.img || 'assets/images/card-orange-handwork-saree.webp';
-        return {
-          id: slug,
-          plate: String(BASE_PIECES.length + idx + 1).padStart(2, '0'),
-          code: 'RR-' + (p.id ? p.id.replace('PROD-', '') : (idx + 10)),
-          name: p.name || 'Atelier Garment',
-          avail: p.avail || 'Made to Order',
-          colour: p.colour || 'Bespoke Royal',
-          fabric: p.category ? (p.category + ' with hand embroidery') : 'Pure handloom silk with zardozi accents',
-          desc: 'A masterwork handcrafted in the Revikaraj Rathore India atelier, featuring refined artisanal embellishment and bespoke finishing tailored to your measures.',
-          priceNote: p.priceMode || 'Price available on request',
-          categories: [catSlug, 'sarees', 'handwork-sarees'],
-          collections: [colSlug, 'collection-2026'],
-          primaryCategory: p.category || 'Handwork Sarees',
-          primaryCategorySlug: catSlug,
-          primaryCollection: p.collection || 'Collection 2026',
-          img: imgUrl,
-          alt: (p.name || 'Garment') + ' lookbook photograph',
-          stills: [imgUrl, imgUrl, 'assets/images/deco-artisan-beadwork.webp', 'assets/images/studio-craft-detail.webp'],
-          components: '2 — Saree with blouse piece',
-          care: 'Dry clean only. Store folded in muslin, away from direct light.'
-        };
-      });
-    } catch (e) {
-      console.warn('Could not read admin products:', e);
-      return [];
-    }
-  }
 
-  function getAllPieces() {
-    var admin = getAdminPieces();
-    return BASE_PIECES.concat(admin);
+        if (match) {
+          matchedAdminIds[match.id] = true;
+          var cleanImg = match.img || base.img;
+          if (cleanImg.indexOf('../') === 0) cleanImg = cleanImg.replace('../', '');
+
+          var merged = {
+            id: base.id,
+            plate: base.plate,
+            code: base.code,
+            name: match.name || base.name,
+            avail: match.avail || base.avail,
+            colour: match.colour || base.colour,
+            fabric: match.fabric || base.fabric,
+            desc: match.desc || base.desc,
+            priceNote: match.priceMode || base.priceNote,
+            categories: base.categories,
+            collections: base.collections,
+            primaryCategory: match.category || base.primaryCategory,
+            primaryCategorySlug: slugify(match.category || base.primaryCategory),
+            primaryCollection: match.collection || base.primaryCollection,
+            img: cleanImg,
+            alt: (match.name || base.name) + ', full length',
+            stills: (cleanImg && (cleanImg !== base.img || cleanImg.indexOf('data:') === 0))
+              ? [cleanImg, cleanImg, base.stills[2], base.stills[3]]
+              : base.stills,
+            components: base.components,
+            care: base.care
+          };
+          result.push(merged);
+        } else {
+          result.push(base);
+        }
+      });
+
+      // Add any additional admin pieces that weren't base pieces
+      adminList.forEach(function (a, idx) {
+        if (!matchedAdminIds[a.id]) {
+          var cleanImg = a.img || 'assets/images/card-orange-handwork-saree.webp';
+          if (cleanImg.indexOf('../') === 0) cleanImg = cleanImg.replace('../', '');
+          var slug = a.slug || slugify(a.name || ('piece-' + (idx + 1)));
+          var catSlug = slugify(a.category || 'sarees');
+          var colSlug = slugify(a.collection || 'collection-2026');
+
+          result.push({
+            id: slug,
+            plate: String(BASE_PIECES.length + idx + 1).padStart(2, '0'),
+            code: 'RR-' + (a.id ? a.id.replace('PROD-', '') : (idx + 10)),
+            name: a.name || 'Atelier Garment',
+            avail: a.avail || 'Made to Order',
+            colour: a.colour || 'Bespoke Royal',
+            fabric: a.fabric || (a.category ? (a.category + ' with hand embroidery') : 'Pure handloom silk with zardozi accents'),
+            desc: a.desc || 'A masterwork handcrafted in the Revikaraj Rathore India atelier, featuring refined artisanal embellishment and bespoke finishing tailored to your measures.',
+            priceNote: a.priceMode || 'Price available on request',
+            categories: [catSlug, 'sarees', 'handwork-sarees'],
+            collections: [colSlug, 'collection-2026'],
+            primaryCategory: a.category || 'Handwork Sarees',
+            primaryCategorySlug: catSlug,
+            primaryCollection: a.collection || 'Collection 2026',
+            img: cleanImg,
+            alt: (a.name || 'Garment') + ' lookbook photograph',
+            stills: [cleanImg, cleanImg, 'assets/images/deco-artisan-beadwork.webp', 'assets/images/studio-craft-detail.webp'],
+            components: '2 — Saree with blouse piece',
+            care: 'Dry clean only. Store folded in muslin, away from direct light.'
+          });
+        }
+      });
+
+      return result;
+    } catch (e) {
+      console.warn('Error reading admin products in catalog:', e);
+      return BASE_PIECES.slice();
+    }
   }
 
   function getPieceById(id) {
