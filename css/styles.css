@@ -419,7 +419,7 @@ button.play[hidden] { display: none; }
 .card:hover { transform: translateY(-4px); color: var(--ink); }
 .card-meta { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .card-meta span:last-child { color: var(--oxblood); }
-.card-frame { padding: 10px; border: 1px solid rgba(176, 141, 87, .7); background: var(--cream-4); }
+.card-frame { padding: 0; border: 0; background: transparent; }
 .card-frame > div { aspect-ratio: 3 / 4; background: var(--cream-5); color: var(--muted); }
 .card-name { font-family: var(--serif-display); font-size: 21px; line-height: 1.25; margin-top: 16px; }
 
@@ -710,7 +710,7 @@ button.play[hidden] { display: none; }
   .shop-filter-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--oxblood); background: transparent; color: var(--oxblood); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
   .shop-filter-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.4; }
   .shop .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
-  .shop .card-frame { padding: 5px; }
+  .shop .card-frame { padding: 0; border: 0; }
   .shop .card-meta { font-size: 9px; letter-spacing: .14em; margin-bottom: 6px; }
   .shop .card-meta span:first-child { display: none; }
   .shop .card-name { font-size: 16px; margin-top: 10px; }
