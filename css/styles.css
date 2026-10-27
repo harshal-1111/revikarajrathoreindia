@@ -1,11 +1,11 @@
 /* Revikaraj Rathore India — shared styles */
 :root {
-  --cream: #F3ECDF;
-  --cream-2: #EAE0CD;
-  --cream-3: #E7DCC8;
-  --cream-4: #EFE6D6;
-  --cream-5: #E2D6C0;
-  --cream-6: #DDD0B8;
+  --cream: #FCFAF8; /* luminous warm white body background */
+  --cream-2: #F5F2EB;
+  --cream-3: #EEEAE1;
+  --cream-4: #F8F6F1;
+  --cream-5: #EFECE5;
+  --cream-6: #E8E3DA;
   --ink: #1F1714;
   --ink-deep: #16100E;
   --ink-warm: #241A17;
@@ -17,8 +17,8 @@
   --emblem-maroon: #590001; /* exact brand red */
   --brass: #B08D57;
   --gold: #C9A86A;
-  --parchment: #EADFCF;
-  --parchment-2: #D9CDBB;
+  --parchment: #F7F3EB;
+  --parchment-2: #ECE4D6;
 
   --serif-display: 'Bodoni Moda', serif;
   --serif-body: 'EB Garamond', Georgia, serif;
@@ -41,7 +41,7 @@ h1, h2, h3 { font-weight: 400; }
 
 /* Paper grain overlay */
 body[data-grain="on"]::after {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .55; mix-blend-mode: multiply;
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .10; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .26 0 0 0 0 .18 0 0 0 .28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 body.no-scroll { overflow: hidden; }
