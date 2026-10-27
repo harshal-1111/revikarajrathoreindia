@@ -19,7 +19,7 @@
   var LABELS = {
     category: {
       'sarees': 'Sarees', 'handwork-sarees': 'Handwork Sarees', 'printed-sarees': 'Printed Sarees', 'poshaks': 'Poshaks',
-      'lehenga': 'Lehenga', 'fusionwear': 'Fusionwear', 'bags': 'Bags', 'shawls-scarves': 'Shawls/Scarves'
+      'lehenga': 'Lehenga', 'shawls-scarves': 'Shawls/Scarves'
     },
     collection: { 'chaap': 'Chaap', 'nazar': 'Nazar', 'collection-2026': 'Collection 2026', 'collection-2025': 'Collection 2025' }
   };
