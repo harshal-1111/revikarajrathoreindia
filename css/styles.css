@@ -650,7 +650,7 @@ button.play[hidden] { display: none; }
 .wordmark { display: block; margin: clamp(56px, 7vw, 96px) auto 0; width: min(100%, 320px); }
 .wordmark img { width: 100%; height: auto; }
 .footer-base { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(201, 168, 106, .45); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--parchment); }
-.footer-base div { display: flex; gap: 24px; }
+.footer-base div { display: flex; flex-wrap: wrap; gap: 12px 24px; }
 .footer-base a { color: var(--parchment); }
 .footer-base a:hover { color: var(--gold); }
 @media (max-width: 459px) {
