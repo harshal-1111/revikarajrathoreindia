@@ -632,6 +632,50 @@
     });
   });
 
+  /* ---------- Dynamic Atelier Location, Contact & Socials Sync ---------- */
+  function syncAtelierContact() {
+    try {
+      var raw = localStorage.getItem('rri_admin_settings');
+      if (!raw) return;
+      var s = JSON.parse(raw);
+      if (!s) return;
+
+      if (s.atelierAddress) {
+        $$('[data-contact="address"]').forEach(function (el) { el.textContent = s.atelierAddress; });
+      }
+      if (s.atelierPhone) {
+        $$('[data-contact="phone"]').forEach(function (el) { el.textContent = s.atelierPhone; });
+      }
+      if (s.atelierPhone || s.atelierPhoneRaw) {
+        var cleanPhone = (s.atelierPhoneRaw || s.atelierPhone).replace(/[^0-9+]/g, '');
+        $$('[data-contact="phone-link"]').forEach(function (el) { el.href = 'tel:' + cleanPhone; });
+      }
+      if (s.whatsappUrl) {
+        $$('[data-contact="whatsapp-link"]').forEach(function (el) { el.href = s.whatsappUrl; });
+        $$('[data-social="whatsapp"]').forEach(function (el) { el.href = s.whatsappUrl; });
+      }
+      if (s.atelierEmail) {
+        $$('[data-contact="email"]').forEach(function (el) { el.textContent = s.atelierEmail; });
+        $$('[data-contact="email-link"]').forEach(function (el) { el.href = 'mailto:' + s.atelierEmail; });
+      }
+      if (s.atelierHours) {
+        $$('[data-contact="hours"]').forEach(function (el) { el.textContent = s.atelierHours; });
+      }
+      if (s.instagramUrl) {
+        $$('[data-social="instagram"]').forEach(function (el) { el.href = s.instagramUrl; });
+      }
+      if (s.pinterestUrl) {
+        $$('[data-social="pinterest"]').forEach(function (el) { el.href = s.pinterestUrl; });
+      }
+      if (s.facebookUrl) {
+        $$('[data-social="facebook"]').forEach(function (el) { el.href = s.facebookUrl; });
+      }
+    } catch (e) {
+      console.warn('Could not sync atelier contact details', e);
+    }
+  }
+  syncAtelierContact();
+
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
     if (openMenu) setMenu(null);

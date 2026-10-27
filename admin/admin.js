@@ -222,7 +222,16 @@
     heroTagline: 'Couture womenswear, embroidered by hand',
     gateEnabled: true,
     previewPassword: 'rri',
-    enable360: false
+    enable360: false,
+    atelierName: 'Revikaraj Rathore India Atelier',
+    atelierAddress: 'B-12, Civil Lines, Near Raj Mandir, Jaipur, Rajasthan — 302001, India',
+    atelierHours: 'Mon to Sat · 11:00 AM – 7:30 PM (By Appointment)',
+    atelierPhone: '+91 98290 12345',
+    atelierEmail: 'concierge@revikarajrathoreindia.com',
+    whatsappUrl: 'https://wa.me/919829012345?text=Greetings%20Revikaraj%20Rathore%20India%20Concierge',
+    instagramUrl: 'https://instagram.com/revikarajrathoreindia',
+    pinterestUrl: 'https://pinterest.com/revikarajrathoreindia',
+    facebookUrl: 'https://facebook.com/revikarajrathoreindia'
   };
 
   // State Management
@@ -348,6 +357,7 @@
       products: 'Lookbook & Garment Catalog',
       campaign: 'Homepage Campaign & Announcements',
       subscribers: 'VIP Client Book & Letters',
+      contact: 'Atelier Flagship, Contact & Social Media',
       security: 'Access & Private Preview Gate'
     };
     if (pageTitle) pageTitle.textContent = tabTitles[tabName] || 'Admin Portal';
@@ -385,6 +395,10 @@
       case 'subscribers':
         container.innerHTML = renderSubscribersHTML();
         attachSubscribersEvents();
+        break;
+      case 'contact':
+        container.innerHTML = renderContactHTML();
+        attachContactEvents();
         break;
       case 'security':
         container.innerHTML = renderSecurityHTML();
@@ -1016,6 +1030,138 @@
     link.click();
     document.body.removeChild(link);
     showToast('VIP Client List exported as CSV');
+  }
+
+  // ================= TAB: ATELIER & CONTACT DETAILS =================
+  function renderContactHTML() {
+    return `
+      <div class="settings-grid">
+        <div class="setting-card">
+          <h2 class="setting-title">Flagship Atelier Location</h2>
+          <p class="setting-desc">Physical address and visitor salon information displayed on the website footer, navigation drawer, and contact cards.</p>
+          
+          <div class="form-group">
+            <label>Atelier &amp; House Name</label>
+            <input type="text" class="form-input" id="cfg-atelier-name" value="${state.settings.atelierName || 'Revikaraj Rathore India Atelier'}">
+          </div>
+
+          <div class="form-group">
+            <label>Full Physical Address</label>
+            <textarea class="form-input" id="cfg-atelier-address" rows="3">${state.settings.atelierAddress || 'B-12, Civil Lines, Near Raj Mandir, Jaipur, Rajasthan — 302001, India'}</textarea>
+            <div class="table-sub">Displayed across all page footers &amp; mobile menu</div>
+          </div>
+
+          <div class="form-group">
+            <label>Studio Visiting Hours</label>
+            <input type="text" class="form-input" id="cfg-atelier-hours" value="${state.settings.atelierHours || 'Mon to Sat · 11:00 AM – 7:30 PM (By Appointment)'}">
+          </div>
+
+          <button class="btn-primary" id="btn-save-address" style="align-self:flex-start;">Update Atelier Location</button>
+        </div>
+
+        <div class="setting-card">
+          <h2 class="setting-title">Concierge &amp; Contact Lines</h2>
+          <p class="setting-desc">Primary phone, WhatsApp concierge, and direct client inquiry email for bespoke bookings.</p>
+          
+          <div class="form-group">
+            <label>Concierge Phone / Calling Number</label>
+            <input type="text" class="form-input" id="cfg-atelier-phone" value="${state.settings.atelierPhone || '+91 98290 12345'}">
+            <div class="table-sub">Clickable on phones for instant calling</div>
+          </div>
+
+          <div class="form-group">
+            <label>WhatsApp Concierge Link / URL</label>
+            <input type="text" class="form-input" id="cfg-atelier-whatsapp" value="${state.settings.whatsappUrl || 'https://wa.me/919829012345?text=Greetings%20Revikaraj%20Rathore%20India%20Concierge'}">
+            <div class="table-sub">Direct WhatsApp chat link with prefilled greeting</div>
+          </div>
+
+          <div class="form-group">
+            <label>Client Concierge Email</label>
+            <input type="email" class="form-input" id="cfg-atelier-email" value="${state.settings.atelierEmail || 'concierge@revikarajrathoreindia.com'}">
+          </div>
+
+          <button class="btn-primary" id="btn-save-contact" style="align-self:flex-start;">Update Contact Numbers</button>
+        </div>
+
+        <div class="setting-card">
+          <h2 class="setting-title">Social Media Profiles</h2>
+          <p class="setting-desc">Direct links to official Revikaraj Rathore India brand channels on Instagram, WhatsApp, Pinterest, and Facebook.</p>
+          
+          <div class="form-group">
+            <label>Instagram Profile URL</label>
+            <input type="url" class="form-input" id="cfg-social-instagram" value="${state.settings.instagramUrl || 'https://instagram.com/revikarajrathoreindia'}">
+          </div>
+
+          <div class="form-group">
+            <label>Pinterest Board URL</label>
+            <input type="url" class="form-input" id="cfg-social-pinterest" value="${state.settings.pinterestUrl || 'https://pinterest.com/revikarajrathoreindia'}">
+          </div>
+
+          <div class="form-group">
+            <label>Facebook Page URL</label>
+            <input type="url" class="form-input" id="cfg-social-facebook" value="${state.settings.facebookUrl || 'https://facebook.com/revikarajrathoreindia'}">
+          </div>
+
+          <button class="btn-primary" id="btn-save-social" style="align-self:flex-start;">Update Social Links</button>
+        </div>
+
+        <div class="setting-card" style="grid-column: 1 / -1;">
+          <h2 class="setting-title">Live Website Footer Preview</h2>
+          <p class="setting-desc">This is how your updated Atelier location, contact lines, and social links appear to visitors in the website footer:</p>
+          
+          <div style="background:var(--oxblood, #590001); border:1px solid rgba(223, 190, 126, 0.4); padding:28px; border-radius:2px; color:#FFFFFF;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px;">
+              <div>
+                <div style="color:#DFBE7E; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; margin-bottom:8px; font-weight:600;">The Atelier Flagship</div>
+                <div style="font-size:15px; line-height:1.5; color:rgba(255,255,255,0.92);">${state.settings.atelierAddress || 'B-12, Civil Lines, Near Raj Mandir, Jaipur, Rajasthan — 302001, India'}</div>
+                <div style="font-size:13px; font-style:italic; color:#DFBE7E; margin-top:6px;">${state.settings.atelierHours || 'Mon to Sat · 11:00 AM – 7:30 PM (By Appointment)'}</div>
+              </div>
+              <div>
+                <div style="color:#DFBE7E; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; margin-bottom:8px; font-weight:600;">Concierge &amp; Inquiries</div>
+                <div style="font-size:15px; color:rgba(255,255,255,0.92); margin-bottom:4px;">📞 ${state.settings.atelierPhone || '+91 98290 12345'}</div>
+                <div style="font-size:15px; color:rgba(255,255,255,0.92); margin-bottom:4px;">💬 WhatsApp Concierge</div>
+                <div style="font-size:15px; color:rgba(255,255,255,0.92);">✉️ ${state.settings.atelierEmail || 'concierge@revikarajrathoreindia.com'}</div>
+              </div>
+              <div>
+                <div style="color:#DFBE7E; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; margin-bottom:8px; font-weight:600;">Official Socials</div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                  <span style="display:inline-block; padding:4px 10px; border:1px solid rgba(223,190,126,0.5); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#DFBE7E;">Instagram</span>
+                  <span style="display:inline-block; padding:4px 10px; border:1px solid rgba(223,190,126,0.5); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#DFBE7E;">WhatsApp</span>
+                  <span style="display:inline-block; padding:4px 10px; border:1px solid rgba(223,190,126,0.5); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#DFBE7E;">Pinterest</span>
+                  <span style="display:inline-block; padding:4px 10px; border:1px solid rgba(223,190,126,0.5); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#DFBE7E;">Facebook</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="display:flex; gap:12px; margin-top:16px;">
+            <button class="btn-primary" id="btn-save-all-contact">Save All Details &amp; Publish</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function attachContactEvents() {
+    function saveContactForm() {
+      state.settings.atelierName = $('#cfg-atelier-name').value.trim();
+      state.settings.atelierAddress = $('#cfg-atelier-address').value.trim();
+      state.settings.atelierHours = $('#cfg-atelier-hours').value.trim();
+      state.settings.atelierPhone = $('#cfg-atelier-phone').value.trim();
+      state.settings.whatsappUrl = $('#cfg-atelier-whatsapp').value.trim();
+      state.settings.atelierEmail = $('#cfg-atelier-email').value.trim();
+      state.settings.instagramUrl = $('#cfg-social-instagram').value.trim();
+      state.settings.pinterestUrl = $('#cfg-social-pinterest').value.trim();
+      state.settings.facebookUrl = $('#cfg-social-facebook').value.trim();
+      persist();
+      showToast('Atelier contact & social media details updated successfully');
+      renderActiveTab();
+    }
+
+    $('#btn-save-address')?.addEventListener('click', saveContactForm);
+    $('#btn-save-contact')?.addEventListener('click', saveContactForm);
+    $('#btn-save-social')?.addEventListener('click', saveContactForm);
+    $('#btn-save-all-contact')?.addEventListener('click', saveContactForm);
   }
 
   // ================= TAB 7: SECURITY & PREVIEW GATE =================
